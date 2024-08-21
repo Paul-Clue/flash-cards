@@ -119,18 +119,46 @@ export default function Generate() {
   };
 
   return (
-    <Container maxWidth='md'>
+    // <Container maxWidth='md'>
+    <Container
+      maxWidth='xl'
+      disableGutters
+      sx={{
+        background:
+          'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+        // height: '100vh',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        // justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Box
         sx={{
           mt: 4,
-          mb: 6,
+          mb: 3,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          width: '70vw',
+          // background:
+          // 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
         }}
       >
-        <Typography variant='h4'> Generate Flashcards</Typography>
-        <Paper sx={{ p: 4, width: '100%' }}>
+        <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+          {' '}
+          Generate Flashcards
+        </Typography>
+        <Paper
+          sx={{
+            p: 4,
+            width: '100%',
+            boxShadow: 3,
+            background:
+              'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+          }}
+        >
           {isLoading && (
             <CircularProgress
               size={80}
@@ -160,6 +188,7 @@ export default function Generate() {
             color='primary'
             onClick={handleSubmit}
             fullWidth
+            sx={{ border: '1px solid', borderColor: 'grey.300' }}
             disabled={flashcards.length > 0 || isLoading}
           >
             Submit
@@ -215,16 +244,19 @@ export default function Generate() {
                             '& > div > div:nth-of-type(2)': {
                               transform: 'rotateY(180deg)',
                             },
+                            overflowY: 'scroll',
+                            background:
+                              'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
                           }}
                         >
                           <div>
                             <div>
-                              <Typography variant='h5' component='div'>
+                              <Typography variant='h5' component='div' sx={{fontSize: '1rem', fontWeight: 'bold'}}>
                                 {flashcard.front}
                               </Typography>
                             </div>
                             <div>
-                              <Typography variant='h5' component='div'>
+                              <Typography variant='h5' component='div' sx={{fontSize: '1rem', fontWeight: 'bold'}}>
                                 {flashcard.back}
                               </Typography>
                             </div>
@@ -244,7 +276,7 @@ export default function Generate() {
               justifyContent: 'center',
             }}
           >
-            <Button variant='contained' color='secondary' onClick={handleOpen}>
+            <Button variant='contained' color='secondary' onClick={handleOpen} sx={{mb: 2,}}>
               Save
             </Button>
           </Box>

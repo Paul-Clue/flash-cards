@@ -23,8 +23,13 @@ export default function Home() {
       sx={{
         // background:
         // "linear-gradient(to bottom, rgb(239, 245, 231), rgb(198, 184, 162))",
+        // background:
+        //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
         background:
-          'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          'linear-gradient(to top right, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245) )',
+        // background:
+        //   'radial-gradient(circle 800px at center left, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274))',
+        // background: 'radial-gradient(circle, rgb(245, 245, 245), rgb(128, 128, 128))',
         // padding: 0,
         height: '100%',
       }}
@@ -36,27 +41,41 @@ export default function Home() {
 
       <AppBar
         position='static'
-        // sx={{ border: '1px solid', borderColor: 'grey.300' }}
+        sx={{
+          backgroundColor: 'transparent',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
       >
         <Toolbar>
-          <Typography variant='h6' style={{ flexGrow: 1 }}>
-            Flashcard Sass
-          </Typography>
-
-          <SignedOut>
-            <Button color='inherit' href='/sign-in'>
-              {' '}
-              Login
-            </Button>
-            <Button color='inherit' href='/sign-up'>
-              {' '}
-              Signup
-            </Button>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <Button href='/'>
+            <Typography
+              variant='h6'
+              style={{
+                flexGrow: 1,
+                color: 'black',
+                fontWeight: 'bolder',
+              }}
+            >
+              Fast-Cards
+            </Typography>
+          </Button>
         </Toolbar>
+
+        <SignedOut>
+          <Button color='inherit' href='/sign-in'>
+            {' '}
+            Login
+          </Button>
+          <Button color='inherit' href='/sign-up'>
+            {' '}
+            Signup
+          </Button>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </AppBar>
       <Box
         sx={{
@@ -67,7 +86,7 @@ export default function Home() {
           // transform: 'translate(-50%, -50%) rotate(-50deg)',
           opacity: '100%',
           zIndex: 0,
-          display: {xs: 'none', md: 'block'}
+          display: { xs: 'none', md: 'block' },
         }}
       >
         <Image
@@ -87,14 +106,20 @@ export default function Home() {
           textAlign: 'center',
           mb: 10,
           mt: 10,
-          display: {xs: 'block', md: 'none'}
+          display: { xs: 'block', md: 'none' },
           // position: 'relative',
           // right: '20%',
           // zIndex: 10,
         }}
       >
-        <Typography variant='h2' gutterBottom>
-          Welcome to Flashcard SaaS
+        <Typography
+          variant='h2'
+          gutterBottom
+          sx={{
+            fontWeight: 'bold',
+          }}
+        >
+          Welcome to Fast-Card
         </Typography>
         <Typography variant='h5'>
           {' '}
@@ -124,7 +149,7 @@ export default function Home() {
       {/* Show on medium and up screens */}
       <Box
         sx={{
-          display: {xs: 'none', md: 'block'},
+          display: { xs: 'none', md: 'block' },
           textAlign: 'center',
           mb: 20,
           mt: 10,
@@ -133,8 +158,14 @@ export default function Home() {
           zIndex: 10,
         }}
       >
-        <Typography variant='h2' gutterBottom>
-          Welcome to Flashcard SaaS
+        <Typography
+          variant='h2'
+          gutterBottom
+          sx={{
+            fontWeight: 'bold',
+          }}
+        >
+          Welcome to Fast-Cards
         </Typography>
         <Typography variant='h5'>
           {' '}
@@ -168,7 +199,7 @@ export default function Home() {
           zIndex: 10,
         }}
       >
-        <Typography variant='h4' components='h2' gutterBottom>
+        <Typography variant='h4' components='h2' gutterBottom sx={{fontWeight: 'bold'}}>
           {' '}
           Features
         </Typography>
@@ -179,7 +210,7 @@ export default function Home() {
             </Typography>
             <Typography>
               {' '}
-              Simply input your text adn let our software do the rest. Creating
+              Simply input your text and let our software do the rest. Creating
               flashCards has never been easier.
             </Typography>
           </Grid>
@@ -190,20 +221,20 @@ export default function Home() {
             <Typography>
               {' '}
               Our AI intelligently breaks down your text into concise
-              flashcards, perfect for stuying.
+              flashcards, perfect for studying.
             </Typography>
           </Grid>
           <Grid item xs={12} md={4} sx={{ zIndex: 10 }}>
-            <Typography variant='h6'>Accsible anywhere</Typography>
+            <Typography variant='h6'>Accessible anywhere</Typography>
             <Typography>
               {' '}
-              Aces your flashcards from any device at any time. Study on the go
+              Access your flashcards from any device at any time. Study on the go
             </Typography>
           </Grid>
         </Grid>
       </Box>
       <Box sx={{ textAlign: 'center', padding: 5 }}>
-        <Typography variant='h4' gutterBottom>
+        <Typography variant='h4' gutterBottom sx={{fontWeight: 'bold'}}>
           Pricing
         </Typography>
         <Grid container spacing={4}>
