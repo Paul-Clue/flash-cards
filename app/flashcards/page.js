@@ -12,6 +12,7 @@ import {
   CardContent,
   Typography,
   Button,
+  Box,
 } from '@mui/material';
 
 export default function Flashcard() {
@@ -104,8 +105,24 @@ export default function Flashcard() {
         flexDirection: 'column',
         // justifyContent: 'center',
         alignItems: 'center',
+        padding: 5,
       }}
     >
+      <Box marginTop={5}>
+        <Typography
+          variant='h2'
+          gutterBottom
+          sx={{
+            color: 'black',
+            fontWeight: 'bold',
+            textShadow:
+              '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+            fontWeight: 'bolder',
+          }}
+        >
+          Your Fast-Card Groups
+        </Typography>
+      </Box>
       <Grid container spacing={3} sx={{ mt: 4 }}>
         {flashcards.map((flashcard, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -119,6 +136,7 @@ export default function Flashcard() {
                   fontWeight: 'bold',
                   background:
                     'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+                    border: '1px solid turquoise'
                 }}
               >
                 <Typography variant='h6' sx={{

@@ -87,6 +87,7 @@ export default function Generate() {
     }
     if (!name) {
       alert('Please enter a name');
+      handleClose();
       return;
     }
 
@@ -114,8 +115,8 @@ export default function Generate() {
 
     await batch.commit();
     console.log('Flashcards saved ', flashcards);
-    // handleClose();
-    // router.push("/flashcards");
+    handleClose();
+    router.push("/flashcards");
   };
 
   return (
