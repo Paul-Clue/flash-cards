@@ -55,7 +55,8 @@ export default function Home() {
               style={{
                 flexGrow: 1,
                 color: 'black',
-                textShadow: '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+                textShadow:
+                  '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
                 fontWeight: 'bolder',
               }}
             >
@@ -117,10 +118,14 @@ export default function Home() {
           variant='h2'
           gutterBottom
           sx={{
+            color: 'black',
             fontWeight: 'bold',
+            textShadow:
+              '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+            fontWeight: 'bolder',
           }}
         >
-          Welcome to Fast-Card
+          Welcome to Fast-Cards
         </Typography>
         <Typography variant='h5'>
           {' '}
@@ -163,7 +168,11 @@ export default function Home() {
           variant='h2'
           gutterBottom
           sx={{
+            color: 'black',
             fontWeight: 'bold',
+            textShadow:
+              '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+            fontWeight: 'bolder',
           }}
         >
           Welcome to Fast-Cards
@@ -200,7 +209,12 @@ export default function Home() {
           zIndex: 10,
         }}
       >
-        <Typography variant='h4' components='h2' gutterBottom sx={{fontWeight: 'bold'}}>
+        <Typography
+          variant='h4'
+          components='h2'
+          gutterBottom
+          sx={{ fontWeight: 'bold' }}
+        >
           {' '}
           Features
         </Typography>
@@ -229,13 +243,14 @@ export default function Home() {
             <Typography variant='h6'>Accessible anywhere</Typography>
             <Typography>
               {' '}
-              Access your flashcards from any device at any time. Study on the go
+              Access your flashcards from any device at any time. Study on the
+              go
             </Typography>
           </Grid>
         </Grid>
       </Box>
       <Box sx={{ textAlign: 'center', padding: 5 }}>
-        <Typography variant='h4' gutterBottom sx={{fontWeight: 'bold'}}>
+        <Typography variant='h4' gutterBottom sx={{ fontWeight: 'bold' }}>
           Pricing
         </Typography>
         <Grid container spacing={4}>
