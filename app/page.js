@@ -55,6 +55,7 @@ export default function Home() {
               style={{
                 flexGrow: 1,
                 color: 'black',
+                textShadow: '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
                 fontWeight: 'bolder',
               }}
             >

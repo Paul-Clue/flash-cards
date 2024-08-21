@@ -92,7 +92,20 @@ export default function Flashcard() {
   };
 
   return (
-    <Container maxWidth='100vw'>
+    <Container
+      maxWidth='xl'
+      disableGutters
+      sx={{
+        background:
+          'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+        // height: '100vh',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        // justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Grid container spacing={3} sx={{ mt: 4 }}>
         {flashcards.map((flashcard, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -102,8 +115,16 @@ export default function Flashcard() {
                 onClick={() => {
                   handleCardClick(flashcard.name, flashcard.cards);
                 }}
+                sx={{
+                  fontWeight: 'bold',
+                  background:
+                    'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+                }}
               >
-                <Typography variant='h6'>{flashcard.name}</Typography>
+                <Typography variant='h6' sx={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                }}>{flashcard.name}</Typography>
               </CardContent>
             </Card>
           </Grid>
