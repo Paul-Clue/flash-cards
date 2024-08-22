@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  project: 'Default project',
-  organization: "org-dif3dIvFrHgDzBOLlfniEvYf",
+  // project: 'Default project',
+  // organization: "org-dif3dIvFrHgDzBOLlfniEvYf",
   apiKey: process.env.FASTCARD_OPENAI_API_KEY,
 });
 
@@ -48,7 +48,7 @@ export async function POST(req) {
     const data = await req.text();
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-4o",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: data },
