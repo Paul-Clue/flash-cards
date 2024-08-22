@@ -34,18 +34,38 @@ export default function Navbar() {
       </Toolbar>
 
       <SignedOut>
-        <Button color='inherit' href='/sign-in'>
-          {' '}
-          Login
-        </Button>
-        <Button color='inherit' href='/sign-up'>
-          {' '}
-          Signup
-        </Button>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Button href='/sign-in' sx={{ color: 'black' }}>
+            {' '}
+            Login
+          </Button>
+          <Button href='/sign-up' sx={{ color: 'black' }}>
+            {' '}
+            Signup
+          </Button>
+        </Box>
       </SignedOut>
       <SignedIn>
-        <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-          <Button color='inherit' sx={{color: 'black',}} onClick={() => router.push('/generate')}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            color='inherit'
+            sx={{ color: 'black' }}
+            onClick={() => router.push('/generate')}
+          >
             {' '}
             Generate Fast-Cards
           </Button>
