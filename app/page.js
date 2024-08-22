@@ -14,6 +14,7 @@ import {
   Box,
 } from '@mui/material';
 import Head from 'next/head';
+import Navbar from './components/Navbar';
 
 export default function Home() {
   return (
@@ -38,47 +39,7 @@ export default function Home() {
         <title>Flashcard SaaS</title>
         <meta name='description' content='Create flashcard from your text' />
       </Head>
-
-      <AppBar
-        position='static'
-        sx={{
-          backgroundColor: 'transparent',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Toolbar>
-          <Button href='/'>
-            <Typography
-              variant='h6'
-              style={{
-                flexGrow: 1,
-                color: 'black',
-                textShadow:
-                  '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
-                fontWeight: 'bolder',
-              }}
-            >
-              Fast-Cards
-            </Typography>
-          </Button>
-        </Toolbar>
-
-        <SignedOut>
-          <Button color='inherit' href='/sign-in'>
-            {' '}
-            Login
-          </Button>
-          <Button color='inherit' href='/sign-up'>
-            {' '}
-            Signup
-          </Button>
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </AppBar>
+      <Navbar />
       <Box
         sx={{
           position: 'absolute',

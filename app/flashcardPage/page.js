@@ -10,6 +10,7 @@ import {
   CardContent,
   Container,
 } from '@mui/material';
+import Navbar from '../components/Navbar';
 
 export default function FlashcardPage() {
   const searchParams = useSearchParams();
@@ -38,11 +39,11 @@ export default function FlashcardPage() {
           flexDirection: 'column',
           // justifyContent: 'center',
           alignItems: 'center',
-          padding: 5,
         }}
       >
+        <Navbar />
         {cards.length > 0 && (
-          <Box sm={{ mt: 4 }}>
+          <Box sm={{ mt: 4 }} sx={{marginTop: 5}}>
             <Typography
               variant='h2'
               gutterBottom
@@ -53,30 +54,27 @@ export default function FlashcardPage() {
                   '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
                 fontWeight: 'bolder',
                 textAlign: 'center',
+                mb: 5
               }}
             >
               Fast-Cards
             </Typography>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} sx={{ marginBottom: 5 }}>
               {cards.map((card, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Card>
+                    <Card
+                      sx={{
+                        background: 'transparent',
+                        border: '1px solid turquoise',
+                      }}
+                    >
                       <CardActionArea
                         onClick={() => {
                           handleCardClick(index);
                         }}
                       >
-                        <CardContent
-                          sx={
-                            {
-                              // fontWeight: 'bold',
-                              // background:
-                              //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-                              // border: '1px solid turquoise',
-                            }
-                          }
-                        >
+                        <CardContent>
                           <Box
                             sx={{
                               perspective: '1000px',
@@ -109,7 +107,7 @@ export default function FlashcardPage() {
                               overflowY: 'scroll',
                               background:
                                 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-                              border: '1px solid turquoise',
+                              // border: '1px solid turquoise',
                             }}
                           >
                             <div>

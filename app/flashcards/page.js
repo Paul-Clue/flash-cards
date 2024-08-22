@@ -14,6 +14,7 @@ import {
   Button,
   Box,
 } from '@mui/material';
+import Navbar from '../components/Navbar';
 
 export default function Flashcard() {
   const { isLoading, isSignedIn, user } = useUser();
@@ -61,6 +62,7 @@ export default function Flashcard() {
 
   if (flashcards.length === 0) {
     return (
+      // <Navbar />
       <Container
         maxWidth='100vw'
         sx={{
@@ -93,61 +95,71 @@ export default function Flashcard() {
   };
 
   return (
-    <Container
-      maxWidth='xl'
-      disableGutters
-      sx={{
-        background:
+    <>
+      <Container
+        maxWidth='xl'
+        disableGutters
+        sx={{
+          background:
           'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
-        // height: '100vh',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        // justifyContent: 'center',
-        alignItems: 'center',
-        padding: 5,
-      }}
-    >
-      <Box marginTop={5}>
-        <Typography
-          variant='h2'
-          gutterBottom
-          sx={{
-            color: 'black',
-            fontWeight: 'bold',
-            textShadow:
-              '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
-            fontWeight: 'bolder',
-          }}
-        >
-          Your Fast-Card Groups
-        </Typography>
-      </Box>
-      <Grid container spacing={3} sx={{ mt: 4 }}>
-        {flashcards.map((flashcard, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card>
-              <CardActionArea></CardActionArea>
-              <CardContent
-                onClick={() => {
-                  handleCardClick(flashcard.name, flashcard.cards);
-                }}
-                sx={{
-                  fontWeight: 'bold',
-                  background:
-                    'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-                    border: '1px solid turquoise'
-                }}
-              >
-                <Typography variant='h6' sx={{
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                }}>{flashcard.name}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+          // height: '100vh',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          // justifyContent: 'center',
+          alignItems: 'center',
+          // padding: 5,
+          // paddingTop: 0,
+        }}
+      >
+        <Navbar />
+        <Box marginTop={5}>
+          <Typography
+            variant='h2'
+            gutterBottom
+            sx={{
+              color: 'black',
+              fontWeight: 'bold',
+              textShadow:
+                '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+              fontWeight: 'bolder',
+            }}
+          >
+            Your Fast-Card Groups
+          </Typography>
+        </Box>
+        <Grid container spacing={3} sx={{ mt: 4, padding: 5, }}>
+          {flashcards.map((flashcard, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card>
+                <CardActionArea>
+                  <CardContent
+                    onClick={() => {
+                      handleCardClick(flashcard.name, flashcard.cards);
+                    }}
+                    sx={{
+                      fontWeight: 'bold',
+                      background:
+                        'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+                      border: '1px solid turquoise',
+                    }}
+                  >
+                    <Typography
+                      variant='h6'
+                      sx={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {flashcard.name}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 }

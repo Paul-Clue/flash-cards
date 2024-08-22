@@ -28,6 +28,7 @@ import {
   collection,
   writeBatch,
 } from 'firebase/firestore';
+import Navbar from '../components/Navbar'
 
 export default function Generate() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -116,7 +117,7 @@ export default function Generate() {
     await batch.commit();
     console.log('Flashcards saved ', flashcards);
     handleClose();
-    router.push("/flashcards");
+    router.push('/flashcards');
   };
 
   return (
@@ -135,6 +136,7 @@ export default function Generate() {
         alignItems: 'center',
       }}
     >
+      <Navbar />
       <Box
         sx={{
           mt: 4,
@@ -190,7 +192,7 @@ export default function Generate() {
             onClick={handleSubmit}
             fullWidth
             sx={{ border: '1px solid', borderColor: 'grey.300' }}
-            disabled={flashcards.length > 0 || isLoading}
+            disabled={isLoading}
           >
             Submit
           </Button>
@@ -209,7 +211,7 @@ export default function Generate() {
             {flashcards.map((flashcard, index) => {
               return (
                 <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Card>
+                  <Card sx={{background: 'transparent', border: '1px solid turquoise'}}>
                     <CardActionArea
                       onClick={() => {
                         handleCardClick(index);
@@ -248,16 +250,25 @@ export default function Generate() {
                             overflowY: 'scroll',
                             background:
                               'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+                            // border: '1px solid turquoise',
                           }}
                         >
                           <div>
                             <div>
-                              <Typography variant='h5' component='div' sx={{fontSize: '1rem', fontWeight: 'bold'}}>
+                              <Typography
+                                variant='h5'
+                                component='div'
+                                sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+                              >
                                 {flashcard.front}
                               </Typography>
                             </div>
                             <div>
-                              <Typography variant='h5' component='div' sx={{fontSize: '1rem', fontWeight: 'bold'}}>
+                              <Typography
+                                variant='h5'
+                                component='div'
+                                sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+                              >
                                 {flashcard.back}
                               </Typography>
                             </div>
@@ -277,7 +288,12 @@ export default function Generate() {
               justifyContent: 'center',
             }}
           >
-            <Button variant='contained' color='secondary' onClick={handleOpen} sx={{mb: 2,}}>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={handleOpen}
+              sx={{ mb: 2 }}
+            >
               Save
             </Button>
           </Box>
