@@ -20,7 +20,7 @@ const openai = new OpenAI({
 //   }]
 // }`;
 const systemPrompt = `You are a flashcard creator.
-Your task is to generate concise and effective flashcards for studying based oon the based on the given topic or content. Follow these guidelines:
+Your task is to generate concise and effective flashcards for studying based on the based on the given topic, word, phrase, or content. Follow these guidelines:
 
 1. Create clear and concise questions for the front of the flashcards.
 2. Provide an accurate and informative answers for the back of the flashcards.
