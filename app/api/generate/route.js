@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
+  project: 'Default project',
+  organization: "org-dif3dIvFrHgDzBOLlfniEvYf",
   apiKey: process.env.FASTCARD_OPENAI_API_KEY,
 });
 
