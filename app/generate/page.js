@@ -28,7 +28,7 @@ import {
   collection,
   writeBatch,
 } from 'firebase/firestore';
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbar';
 
 export default function Generate() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -149,9 +149,19 @@ export default function Generate() {
           // 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
         }}
       >
-        <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+        <Typography
+          variant='h4'
+          sx={{
+            color: 'black',
+            fontWeight: 'bold',
+            textShadow:
+              '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+            fontWeight: 'bolder',
+            mb: 5,
+          }}
+        >
           {' '}
-          Generate Flashcards
+          Generate Fast-Cards
         </Typography>
         <Paper
           sx={{
@@ -211,7 +221,12 @@ export default function Generate() {
             {flashcards.map((flashcard, index) => {
               return (
                 <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Card sx={{background: 'transparent', border: '1px solid turquoise'}}>
+                  <Card
+                    sx={{
+                      background: 'transparent',
+                      border: '1px solid turquoise',
+                    }}
+                  >
                     <CardActionArea
                       onClick={() => {
                         handleCardClick(index);
