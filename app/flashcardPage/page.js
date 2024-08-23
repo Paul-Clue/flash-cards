@@ -65,8 +65,8 @@ export default function FlashcardPage() {
                   <Grid item xs={12} sm={6} md={4} key={index}>
                     <Card
                       sx={{
-                        background: 'transparent',
-                        border: '1px solid turquoise',
+                        // background: 'transparent',
+                        // border: '1px solid turquoise',
                       }}
                     >
                       <CardActionArea
@@ -105,8 +105,8 @@ export default function FlashcardPage() {
                                 transform: 'rotateY(180deg)',
                               },
                               overflowY: 'scroll',
-                              background:
-                                'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+                              // background:
+                              //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
                               // border: '1px solid turquoise',
                             }}
                           >
