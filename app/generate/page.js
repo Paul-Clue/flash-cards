@@ -29,7 +29,7 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
-import { stripeInstance } from '../../utils/stripe';
+// import { stripeInstance } from '../../utils/stripe';
 
 export default function Generate() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -53,7 +53,7 @@ export default function Generate() {
   // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   //   apiVersion: '2022-11-15',
   // })
-  const stripe = stripeInstance();
+  // const stripe = stripeInstance();
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -96,6 +96,8 @@ export default function Generate() {
   };
 
   const checkSubscription = async (email) => {
+    const stripe = await getStripe();
+
     try {
       // Retrieve customer list by email
       console.log(' Checking subscription for email: ', email);

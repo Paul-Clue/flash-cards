@@ -15,13 +15,13 @@ import {
 } from '@mui/material';
 import Head from 'next/head';
 import Navbar from './components/Navbar';
-import { stripeInstance } from '@/utils/stripe';
+// import { stripeInstance } from '@/utils/stripe';
 
 export default function Home() {
   const { user } = useUser();
   const [subscription, setSubscription] = useState(false);
 
-  const stripe = stripeInstance();
+  // const stripe = stripeInstance();
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout_sessions', {
@@ -41,6 +41,7 @@ export default function Home() {
   };
 
   const checkSubscription = async (email) => {
+    const stripe = await getStripe();
     try {
       // Retrieve customer list by email
       console.log(' Checking subscription for email: ', email);
