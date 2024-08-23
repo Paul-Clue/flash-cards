@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { Container, Typography, Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export const ResultPage = () => {
+export default function ResultPage(){
   const router = useRouter()
   const searchParams = useSearchParams()
   const session_id = searchParams.get('session_id')
