@@ -26,7 +26,7 @@ export async function POST(req){
                     intercal_count: 1,
                 }
             },
-            currency: CURRENCY,
+            // currency: CURRENCY,
             quantity: 1,
           },
         ],
