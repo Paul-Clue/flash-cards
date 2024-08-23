@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-// import getStripe from '../utils/get-stripe';
+import getStripe from '../utils/get-stripe';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
@@ -17,6 +17,22 @@ import Head from 'next/head';
 import Navbar from './components/Navbar';
 
 export default function Home() {
+  const handleSubmit = async () => {
+    const checkoutSession = await fetch('/api/checkout_sessions', {
+      method: 'POST',
+      headers: { origin: 'https://fstcards.com' },
+    })
+    const checkoutSessionJson = await checkoutSession.json()
+  
+    const stripe = await getStripe()
+    const {error} = await stripe.redirectToCheckout({
+      sessionId: checkoutSessionJson.id,
+    })
+  
+    if (error) {
+      console.warn(error.message)
+    }
+  }
   return (
     <Container
       maxWidth='xl'
@@ -270,6 +286,7 @@ export default function Home() {
                 variant='contained'
                 color='primary'
                 sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+                onClick={handleSubmit}
               >
                 {' '}
                 Choose Pro
