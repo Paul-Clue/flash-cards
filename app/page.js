@@ -301,7 +301,7 @@ export default function Home() {
               <Typography variant='h6' gutterBottom>
                 Free
               </Typography>
-              <Typography>Create up to 5 flashcards collections.</Typography>
+              <Typography>Create up to 5 Fast-Cards collections.</Typography>
               {user ? (
                 <Typography variant='body1' color='green' sx={{ mt: 2 }}>
                   You are already active

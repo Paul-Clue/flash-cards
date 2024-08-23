@@ -59,6 +59,7 @@ export default function Navbar() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
+            mr: 2,
           }}
         >
           <Button
@@ -71,7 +72,7 @@ export default function Navbar() {
           </Button>
           <Button
             color='inherit'
-            sx={{ color: 'black', fontWeight: 'bold' }}
+            sx={{ color: 'black', fontWeight: 'bold', mr: 3, }}
             onClick={() => router.push('/flashcards')}
           >
             {' '}
