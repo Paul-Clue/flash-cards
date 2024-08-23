@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import getStripe from '../utils/get-stripe';
+import getStripe from '../utils/getStripe';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
