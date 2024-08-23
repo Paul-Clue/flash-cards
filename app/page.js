@@ -301,10 +301,10 @@ export default function Home() {
               <Typography variant='h6' gutterBottom>
                 Free
               </Typography>
-              <Typography>Create up to 5 Fast-Cards collections.</Typography>
+              <Typography>Create up to 5 Fast-Card collections.</Typography>
               {user ? (
                 <Typography variant='body1' color='green' sx={{ mt: 2 }}>
-                  You are already active
+                  You are using the free plan.
                 </Typography>
               ) : (
                 <Button
