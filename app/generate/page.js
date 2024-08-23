@@ -1,7 +1,7 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Box,
@@ -29,6 +29,7 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
+import { stripeInstance } from '../../utils/stripe';
 
 export default function Generate() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -40,6 +41,19 @@ export default function Generate() {
   const [open, setOpen] = useState(false);
   const [needsMoreInfo, setNeedsMoreInfo] = useState(false);
   const router = useRouter();
+  const [subscription, setSubscription] = useState(false);
+
+  // const stripe = new Stripe(
+  //   "sk_test_51PoZ1gA1Bes7OdcoHZ5Y1pfe3wOAlNVfdz9ziYGAwFKjXCvtMMPYSh5cmgoVUCUDCc5G8IJvOK99HdSdnMWzZ0VS00SaZlixMb",
+  //   {
+  //     apiVersion: "2024-06-20",
+  //   }
+  // );
+
+  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  //   apiVersion: '2022-11-15',
+  // })
+  const stripe = stripeInstance();
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -81,6 +95,51 @@ export default function Generate() {
     setOpen(false);
   };
 
+  const checkSubscription = async (email) => {
+    try {
+      // Retrieve customer list by email
+      console.log(' Checking subscription for email: ', email);
+      const customers = await stripe.customers.list({
+        email: email,
+        limit: 1, // Assuming each email corresponds to a single customer
+      });
+
+      if (customers.data.length === 0) {
+        console.log('No customer found with this email.');
+        return;
+      }
+
+      const customerId = customers.data[0].id;
+      console.log('Customer ID: ', customerId);
+
+      // Check for active subscriptions
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customerId,
+        status: 'active',
+      });
+
+      if (subscriptions.data.length > 0) {
+        console.log('Subscription found: ', subscriptions.data[0]);
+        localStorage.setItem('subscription', true);
+        setSubscription(true);
+      } else {
+        console.log('No active subscription found.');
+        localStorage.removeItem('subscription');
+        setSubscription(false);
+      }
+    } catch (error) {
+      console.error('Error checking subscription', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    checkSubscription(user.primaryEmailAddress.emailAddress);
+  }, [user]);
+
   const saveFlashcards = async () => {
     if (!isSignedIn || !user) {
       alert('You must be signed in to save flashcards');
@@ -98,15 +157,30 @@ export default function Generate() {
 
     if (docSnap.exists()) {
       const collections = docSnap.data().flashcards || [];
+
+      if (collections.length >= 5 && !subscription) {
+        alert(
+          'You already have 3 collections. Upgrade to Pro Plan to save more'
+        );
+        return;
+      }
+
       if (collections.find((f) => f.name === name)) {
         alert('Flashcard collection with the same name already exits');
         return;
       } else {
         collections.push({ name });
-        batch.set(userDocRef, { flashcards: collections }, { merge: true });
+        batch.set(
+          userDocRef,
+          {
+            flashcards: collections,
+            email: user.primaryEmailAddress.emailAddress,
+          },
+          { merge: true }
+        );
       }
     } else {
-      batch.set(userDocRef, { flashcards: [{ name }] });
+      batch.set(userDocRef, { flashcards: [{ name }], email: user.email });
     }
     const colRef = collection(userDocRef, name);
     flashcards.forEach((flashcard) => {

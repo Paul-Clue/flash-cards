@@ -1,8 +1,8 @@
 'use client';
 import Image from 'next/image';
 import getStripe from '../utils/getStripe';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import { useEffect } from 'react';
+import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import {
   Typography,
@@ -15,24 +15,76 @@ import {
 } from '@mui/material';
 import Head from 'next/head';
 import Navbar from './components/Navbar';
+import { stripeInstance } from '@/utils/stripe';
 
 export default function Home() {
+  const { user } = useUser();
+  const [subscription, setSubscription] = useState(false);
+
+  const stripe = stripeInstance();
+
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout_sessions', {
       method: 'POST',
       headers: { origin: 'https://fstcards.com' },
-    })
-    const checkoutSessionJson = await checkoutSession.json()
-  
-    const stripe = await getStripe()
-    const {error} = await stripe.redirectToCheckout({
+    });
+    const checkoutSessionJson = await checkoutSession.json();
+
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
       sessionId: checkoutSessionJson.id,
-    })
-  
+    });
+
     if (error) {
-      console.warn(error.message)
+      console.warn(error.message);
     }
-  }
+  };
+
+  const checkSubscription = async (email) => {
+    try {
+      // Retrieve customer list by email
+      console.log(' Checking subscription for email: ', email);
+      const customers = await stripe.customers.list({
+        email: email,
+        limit: 1, // Assuming each email corresponds to a single customer
+      });
+
+      if (customers.data.length === 0) {
+        console.log('No customer found with this email.');
+        return;
+      }
+
+      const customerId = customers.data[0].id;
+      console.log('Customer ID: ', customerId);
+
+      // Check for active subscriptions
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customerId,
+        status: 'active',
+      });
+
+      if (subscriptions.data.length > 0) {
+        console.log('Subscription found: ', subscriptions.data[0]);
+        // localStorage.setItem('subscription', true);
+        setSubscription(true);
+      } else {
+        console.log('No active subscription found.');
+        // localStorage.removeItem('subscription');
+        setSubscription(false);
+      }
+    } catch (error) {
+      console.error('Error checking subscription', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    checkSubscription(user.primaryEmailAddress.emailAddress);
+  }, [user]);
+
   return (
     <Container
       maxWidth='xl'
@@ -246,20 +298,37 @@ export default function Home() {
                 Basic
               </Typography>
               <Typography variant='h6' gutterBottom>
-                $5/Month
+                Free
               </Typography>
-              <Typography>
+              <Typography>Create up to 5 flashcards collections.</Typography>
+              {user ? (
+                <Typography variant='body1' color='green' sx={{ mt: 2 }}>
+                  You are already active
+                </Typography>
+              ) : (
+                <Button
+                  variant='contained'
+                  color='primary'
+                  sx={{ mt: 2 }}
+                  onClick={() => {
+                    window.location.href = '/sign-in';
+                  }}
+                >
+                  Choose Basic
+                </Button>
+              )}
+              {/* <Typography>
                 {' '}
                 Access to basic flashcard features and limited storage
-              </Typography>
-              <Button
+              </Typography> */}
+              {/* <Button
                 variant='contained'
                 color='primary'
                 sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
               >
                 {' '}
                 Choose Basic
-              </Button>
+              </Button> */}
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -282,7 +351,22 @@ export default function Home() {
                 {' '}
                 Unlimited flashcards and storage, with priority support.
               </Typography>
-              <Button
+              {subscription ? (
+                <Typography variant='body1' color='green' sx={{ mt: 2 }}>
+                  You are already subscribed to the Pro plan.
+                </Typography>
+              ) : (
+                <Button
+                  variant='contained'
+                  color='primary'
+                  sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+                  onClick={handleSubmit}
+                >
+                  {' '}
+                  Choose Pro
+                </Button>
+              )}
+              {/* <Button
                 variant='contained'
                 color='primary'
                 sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
@@ -290,7 +374,7 @@ export default function Home() {
               >
                 {' '}
                 Choose Pro
-              </Button>
+              </Button> */}
             </Box>
           </Grid>
         </Grid>

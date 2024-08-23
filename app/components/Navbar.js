@@ -63,11 +63,19 @@ export default function Navbar() {
         >
           <Button
             color='inherit'
-            sx={{ color: 'black' }}
+            sx={{ color: 'black', fontWeight: 'bold' }}
             onClick={() => router.push('/generate')}
           >
             {' '}
             Generate Fast-Cards
+          </Button>
+          <Button
+            color='inherit'
+            sx={{ color: 'black', fontWeight: 'bold' }}
+            onClick={() => router.push('/flashcards')}
+          >
+            {' '}
+            Your Fast-Cards
           </Button>
           <UserButton />
         </Box>
