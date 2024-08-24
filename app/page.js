@@ -255,25 +255,24 @@ export default function Home() {
             </Typography>
             <Typography>
               {' '}
-              Simply input your text and let our software do the rest. Creating
-              flashCards has never been easier.
+              Simply input your text and let our software do the rest.
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant='h6' gutterBottom>
-              Smart FlashCards
+              Smart Fast-Cards
             </Typography>
             <Typography>
               {' '}
               Our AI intelligently breaks down your text into concise
-              flashcards, perfect for studying.
+              Fast-Cards, perfect for studying. Some Fast-Cards will generate Wikipedia and/or YouTube links for a deeper dive into the topic.
             </Typography>
           </Grid>
           <Grid item xs={12} md={4} sx={{ zIndex: 10 }}>
             <Typography variant='h6'>Accessible anywhere</Typography>
             <Typography>
               {' '}
-              Access your flashcards from any device at any time. Study on the
+              Access your Fast-Cards from any device at any time. Study on the
               go
             </Typography>
           </Grid>
@@ -350,7 +349,7 @@ export default function Home() {
               </Typography>
               <Typography>
                 {' '}
-                Unlimited flashcards and storage, with priority support.
+                Unlimited Fast-Cards and storage, with priority support.
               </Typography>
               {subscription ? (
                 <Typography variant='body1' color='green' sx={{ mt: 2 }}>

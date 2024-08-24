@@ -71,6 +71,53 @@ export default function Generate() {
           return;
         }
         setFlashcards(data);
+        // setFlashcards(data.map(datum => ({
+        //   ...datum,
+        //   back: datum.back.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '') // Remove Wikipedia reference
+        // })));
+
+        // setFlashcards(data.map(datum => ({
+        //   ...datum,
+        //   back: datum.back
+        //     .replace(/\s*\(https?:\/\/[^\s)]+\)/g, '') // Remove Wikipedia reference
+        //     .replace(/\s*\[Learn more\]/g, '') // Remove [Learn more] text
+        // })));
+
+        // Active links
+        // setFlashcards(
+        //   data.map((datum) => {
+        //     let backText = datum.back
+        //     //  backText = datum.back.replace(/\s*\[You Tube\]/g, ''); // Remove [Learn more] text
+        //     const urlMatches = backText.match(/\((https?:\/\/[^\s)]+)\)/g); // Extract URL
+
+        //     return {
+        //       ...datum,
+        //       back: (
+        //         <>
+        //           {backText.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}{' '}
+        //           {/* Remove Wikipedia reference */}
+        //           {/* {urlMatches && urlMatches.map((url, index) => (
+        //           <a key={index} href={url.slice(1, -1)} target="_blank" rel="noopener noreferrer">
+        //             {url.slice(1, -1)}
+        //           </a>
+        //         ))} */}
+        //         {urlMatches && urlMatches.map((url, index) => (
+        //           <div key={index}>
+        //             <a href={url.slice(1, -1)} target="_blank" rel="noopener noreferrer">
+        //               {url.slice(1, -1)}
+        //             </a>
+        //             {index < urlMatches.length - 1 && <br />} {/* Add line break except for the last link */}
+        //           </div>
+        //         ))}
+        //         </>
+        //       ),
+        //     };
+        //   })
+        // );
+        console.log(
+          'data',
+          flashcards.map((datum) => datum.back)
+        );
       })
       .catch((error) => {
         console.error('Failed to generate flashcards:', error);
@@ -298,12 +345,7 @@ export default function Generate() {
             {flashcards.map((flashcard, index) => {
               return (
                 <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Card
-                    sx={{
-                      // background: 'transparent',
-                      // border: '1px solid turquoise',
-                    }}
-                  >
+                  <Card>
                     <CardActionArea
                       onClick={() => {
                         handleCardClick(index);
@@ -318,8 +360,8 @@ export default function Generate() {
                               transformStyle: 'preserve-3d',
                               position: 'relative',
                               width: '100%',
-                              height: '200px',
-                              boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                              height: '350px',
+                              // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
                               transform: flipped[index]
                                 ? 'rotateY(180deg)'
                                 : 'rotateY(0deg)',
@@ -339,18 +381,30 @@ export default function Generate() {
                             '& > div > div:nth-of-type(2)': {
                               transform: 'rotateY(180deg)',
                             },
-                            overflowY: 'scroll',
+                            overflowY: 'auto',
+                            // overflowX: 'scroll'
                             // background:
                             //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
                             // border: '1px solid turquoise',
                           }}
                         >
                           <div>
-                            <div>
+                            <div className={{ backgroundColor: 'red' }}>
                               <Typography
                                 variant='h5'
                                 component='div'
-                                sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+                                sx={{
+                                  // fontSize: '.8rem',
+                                  fontWeight: 'bold',
+                                  textAlign: 'center',
+                                  // overflowY: 'scroll',
+                                  // overflowX: 'scroll',
+                                  fontSize: '.8rem',
+                                  fontWeight: 'bold',
+                                  overflow: 'auto',
+                                  whiteSpace: 'break-spaces',
+                                  wordWrap: 'break-word',
+                                }}
                               >
                                 {flashcard.front}
                               </Typography>
@@ -359,9 +413,31 @@ export default function Generate() {
                               <Typography
                                 variant='h5'
                                 component='div'
-                                sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+                                sx={{
+                                  // fontSize: '.8rem',
+                                  fontWeight: 'bold',
+                                  textAlign: 'center',
+                                  // overflowY: 'scroll',
+                                  // overflowX: 'scroll',
+                                  fontSize: '.8rem',
+                                  fontWeight: 'bold',
+                                  overflow: 'auto',
+                                  whiteSpace: 'break-spaces',
+                                  wordWrap: 'break-word',
+                                }}
                               >
-                                {flashcard.back}
+                                {/* {flashcard.back} */}
+                                {/* {flashcard.back.replace(/\s*\[Learn more\]/g, '')} */}
+                                {flashcard.back.match(/\((https?:\/\/[^\s)]+)\)/g)?.map((url, index) => (
+                                  <div key={index}>
+                                    <a href={url.slice(1, -1)} target="_blank" rel="noopener noreferrer">
+                                      {url.slice(1, -1)}
+                                    </a>
+                                    {index < flashcard.back.match(/\((https?:\/\/[^\s)]+)\)/g).length - 1 && <br />} {/* Add line break except for the last link */}
+                                  </div>
+                                ))}
+                                {flashcard.back.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}
+                                {/* {backText.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}{' '} */}
                               </Typography>
                             </div>
                           </div>

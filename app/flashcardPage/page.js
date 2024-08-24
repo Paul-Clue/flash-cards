@@ -83,8 +83,8 @@ export default function FlashcardPage() {
                                 transformStyle: 'preserve-3d',
                                 position: 'relative',
                                 width: '100%',
-                                height: '200px',
-                                boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                                height: '350px',
+                                // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
                                 transform: flipped[index]
                                   ? 'rotateY(180deg)'
                                   : 'rotateY(0deg)',
@@ -104,7 +104,7 @@ export default function FlashcardPage() {
                               '& > div > div:nth-of-type(2)': {
                                 transform: 'rotateY(180deg)',
                               },
-                              overflowY: 'scroll',
+                              // overflowY: 'scroll',
                               // background:
                               //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
                               // border: '1px solid turquoise',
@@ -115,7 +115,18 @@ export default function FlashcardPage() {
                                 <Typography
                                   variant='h5'
                                   component='div'
-                                  sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+                                  sx={{
+                                    // fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    // overflowY: 'scroll',
+                                    // overflowX: 'scroll',
+                                    fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    overflow: 'auto',
+                                    whiteSpace: 'break-spaces',
+                                    wordWrap: 'break-word',
+                                  }}
                                 >
                                   {card.front}
                                 </Typography>
@@ -124,9 +135,29 @@ export default function FlashcardPage() {
                                 <Typography
                                   variant='h5'
                                   component='div'
-                                  sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+                                  sx={{
+                                    // fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    // overflowY: 'scroll',
+                                    // overflowX: 'scroll',
+                                    fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    overflow: 'auto',
+                                    whiteSpace: 'break-spaces',
+                                    wordWrap: 'break-word',
+                                  }}
                                 >
-                                  {card.back}
+                                  {/* {card.back} */}
+                                  {card.back.match(/\((https?:\/\/[^\s)]+)\)/g)?.map((url, index) => (
+                                  <div key={index}>
+                                    <a href={url.slice(1, -1)} target="_blank" rel="noopener noreferrer">
+                                      {url.slice(1, -1)}
+                                    </a>
+                                    {index < card.back.match(/\((https?:\/\/[^\s)]+)\)/g).length - 1 && <br />} {/* Add line break except for the last link */}
+                                  </div>
+                                ))}
+                                {card.back.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}
                                 </Typography>
                               </div>
                             </div>
