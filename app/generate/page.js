@@ -29,6 +29,7 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import getStripe from '../../utils/getStripe';
 // import { stripeInstance } from '../../utils/stripe';
 
@@ -489,6 +490,7 @@ export default function Generate() {
           <Button onClick={saveFlashcards}> Save</Button>
         </DialogActions>
       </Dialog>
+      <Footer />
     </Container>
   );
 }

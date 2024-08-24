@@ -1,7 +1,14 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
-import { collection, doc, getDoc, getDocs, setDoc, writeBatch } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  writeBatch,
+} from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useRouter } from 'next/navigation';
 import {
@@ -15,6 +22,7 @@ import {
   Box,
 } from '@mui/material';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 // import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
@@ -140,19 +148,27 @@ export default function Flashcard() {
     });
 
     await batch.commit();
-    console.log(`Flashcard collection "${collectionName}" deleted successfully.`);
+    console.log(
+      `Flashcard collection "${collectionName}" deleted successfully.`
+    );
 
     // Update the user's flashcards in Firestore
     const docSnap = await getDoc(userDocRef);
     if (docSnap.exists()) {
       const collections = docSnap.data().flashcards || [];
-      const updatedCollections = collections.filter((flashcard) => flashcard.name !== collectionName);
-      
-      await setDoc(userDocRef, { flashcards: updatedCollections }, { merge: true });
+      const updatedCollections = collections.filter(
+        (flashcard) => flashcard.name !== collectionName
+      );
+
+      await setDoc(
+        userDocRef,
+        { flashcards: updatedCollections },
+        { merge: true }
+      );
     }
     setFlashcards((prevFlashcards) =>
-          prevFlashcards.filter((flashcard) => flashcard.name !== collectionName)
-        );
+      prevFlashcards.filter((flashcard) => flashcard.name !== collectionName)
+    );
   };
 
   return (
@@ -206,17 +222,17 @@ export default function Flashcard() {
                     }}
                   >
                     {/* <Box> */}
-                      <DeleteOutlinedIcon
-                        // onClick={() => deleteFlashcardSet(flashcard.name)}
-                        onClick={() => deleteFlashcardCollection(flashcard.name)}
-                        sx={{
-                          color: 'red',
-                          position: 'relative',
-                          left: 350,
-                          top: -8,
-                          zIndex: 10
-                        }}
-                      />
+                    <DeleteOutlinedIcon
+                      // onClick={() => deleteFlashcardSet(flashcard.name)}
+                      onClick={() => deleteFlashcardCollection(flashcard.name)}
+                      sx={{
+                        color: 'red',
+                        position: 'relative',
+                        left: 350,
+                        top: -8,
+                        zIndex: 10,
+                      }}
+                    />
                     {/* </Box> */}
                     <Typography
                       variant='h6'
@@ -240,6 +256,7 @@ export default function Flashcard() {
           ))}
         </Grid>
       </Container>
+      <Footer />
     </>
   );
 }

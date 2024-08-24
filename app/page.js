@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import Head from 'next/head';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 // import { stripeInstance } from '@/utils/stripe';
 
 export default function Home() {
@@ -379,6 +380,7 @@ export default function Home() {
           </Grid>
         </Grid>
       </Box>
+      <Footer />
     </Container>
   );
 }
