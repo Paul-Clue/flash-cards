@@ -246,251 +246,267 @@ export default function Generate() {
   };
 
   return (
-    // <Container maxWidth='md'>
-    <Container
-      maxWidth='xl'
-      disableGutters
-      sx={{
-        background:
-          'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
-        // height: '100vh',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        // justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Navbar />
-      <Box
+    <>
+      {/* // <Container maxWidth='md'> */}
+      <Container
+        maxWidth='xl'
+        disableGutters
         sx={{
-          mt: 4,
-          mb: 3,
+          background:
+            'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          // height: '100vh',
+          minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
+          // justifyContent: 'center',
           alignItems: 'center',
-          width: '70vw',
-          // background:
-          // 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
         }}
       >
-        <Typography
-          variant='h4'
+        <Navbar />
+        <Box
           sx={{
-            color: 'black',
-            fontWeight: 'bold',
-            textShadow:
-              '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
-            fontWeight: 'bolder',
-            mb: 5,
+            mt: 4,
+            mb: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '70vw',
+            // background:
+            // 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
           }}
         >
-          {' '}
-          Generate Fast-Cards
-        </Typography>
-        <Paper
-          sx={{
-            p: 4,
-            width: '100%',
-            boxShadow: 3,
-            background:
-              'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-          }}
-        >
-          {isLoading && (
-            <CircularProgress
-              size={80}
+          <Typography
+            variant='h4'
+            sx={{
+              color: 'black',
+              fontWeight: 'bold',
+              textShadow:
+                '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+              fontWeight: 'bolder',
+              mb: 5,
+            }}
+          >
+            {' '}
+            Generate Fast-Cards
+          </Typography>
+          <Paper
+            sx={{
+              p: 4,
+              width: '100%',
+              boxShadow: 3,
+              background:
+                'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+            }}
+          >
+            {isLoading && (
+              <CircularProgress
+                size={80}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: 1000,
+                }}
+              />
+            )}
+            <TextField
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              label='enter text'
+              fullWidth
+              multiline
+              rows={4}
+              variant='outlined'
               sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 1000,
+                mb: 2,
               }}
             />
-          )}
-          <TextField
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            label='enter text'
-            fullWidth
-            multiline
-            rows={4}
-            variant='outlined'
-            sx={{
-              mb: 2,
-            }}
-          />
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={handleSubmit}
-            fullWidth
-            sx={{ border: '1px solid', borderColor: 'grey.300' }}
-            disabled={isLoading}
-          >
-            Submit
-          </Button>
-
-          {needsMoreInfo && (
-            <Typography variant='h6' color='error'>
-              Please provide more information/context in the input.
-            </Typography>
-          )}
-        </Paper>
-      </Box>
-      {flashcards.length > 0 && (
-        <Box sm={{ mt: 4 }}>
-          <Typography variant='h5'>Flashcards Preview</Typography>
-          <Grid container spacing={3}>
-            {flashcards.map((flashcard, index) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Card>
-                    <CardActionArea
-                      onClick={() => {
-                        handleCardClick(index);
-                      }}
-                    >
-                      <CardContent>
-                        <Box
-                          sx={{
-                            perspective: '1000px',
-                            '& > div': {
-                              transition: 'transform 0.6s',
-                              transformStyle: 'preserve-3d',
-                              position: 'relative',
-                              width: '100%',
-                              height: '350px',
-                              // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-                              transform: flipped[index]
-                                ? 'rotateY(180deg)'
-                                : 'rotateY(0deg)',
-                            },
-                            '& > div > div': {
-                              position: 'absolute',
-                              width: '100%',
-                              height: '100%',
-                              backfaceVisibility: 'hidden',
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              padding: 2,
-                              boxSizing: 'border-box',
-                            },
-
-                            '& > div > div:nth-of-type(2)': {
-                              transform: 'rotateY(180deg)',
-                            },
-                            overflowY: 'auto',
-                            // overflowX: 'scroll'
-                            // background:
-                            //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-                            // border: '1px solid turquoise',
-                          }}
-                        >
-                          <div>
-                            <div className={{ backgroundColor: 'red' }}>
-                              <Typography
-                                variant='h5'
-                                component='div'
-                                sx={{
-                                  // fontSize: '.8rem',
-                                  fontWeight: 'bold',
-                                  textAlign: 'center',
-                                  // overflowY: 'scroll',
-                                  // overflowX: 'scroll',
-                                  fontSize: '.8rem',
-                                  fontWeight: 'bold',
-                                  overflow: 'auto',
-                                  whiteSpace: 'break-spaces',
-                                  wordWrap: 'break-word',
-                                }}
-                              >
-                                {flashcard.front}
-                              </Typography>
-                            </div>
-                            <div>
-                              <Typography
-                                variant='h5'
-                                component='div'
-                                sx={{
-                                  // fontSize: '.8rem',
-                                  fontWeight: 'bold',
-                                  textAlign: 'center',
-                                  // overflowY: 'scroll',
-                                  // overflowX: 'scroll',
-                                  fontSize: '.8rem',
-                                  fontWeight: 'bold',
-                                  overflow: 'auto',
-                                  whiteSpace: 'break-spaces',
-                                  wordWrap: 'break-word',
-                                }}
-                              >
-                                {/* {flashcard.back} */}
-                                {/* {flashcard.back.replace(/\s*\[Learn more\]/g, '')} */}
-                                {flashcard.back.match(/\((https?:\/\/[^\s)]+)\)/g)?.map((url, index) => (
-                                  <div key={index}>
-                                    <a href={url.slice(1, -1)} target="_blank" rel="noopener noreferrer">
-                                      {url.slice(1, -1)}
-                                    </a>
-                                    {index < flashcard.back.match(/\((https?:\/\/[^\s)]+)\)/g).length - 1 && <br />} {/* Add line break except for the last link */}
-                                  </div>
-                                ))}
-                                {flashcard.back.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}
-                                {/* {backText.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}{' '} */}
-                              </Typography>
-                            </div>
-                          </div>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
-          <Box
-            sx={{
-              mt: 4,
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
             <Button
               variant='contained'
-              color='secondary'
-              onClick={handleOpen}
-              sx={{ mb: 2 }}
+              color='primary'
+              onClick={handleSubmit}
+              fullWidth
+              sx={{ border: '1px solid', borderColor: 'grey.300' }}
+              disabled={isLoading}
             >
-              Save
+              Submit
             </Button>
-          </Box>
+
+            {needsMoreInfo && (
+              <Typography variant='h6' color='error'>
+                Please provide more information/context in the input.
+              </Typography>
+            )}
+          </Paper>
         </Box>
-      )}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Save Flashcards</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please enter a name for your flashcards collection
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin='dense'
-            label='Collection Name'
-            type='text'
-            fullWidth
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            variant='outlined'
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}> Cancel</Button>
-          <Button onClick={saveFlashcards}> Save</Button>
-        </DialogActions>
-      </Dialog>
+        {flashcards.length > 0 && (
+          <Box sm={{ mt: 4 }}>
+            <Typography variant='h5'>Flashcards Preview</Typography>
+            <Grid container spacing={3}>
+              {flashcards.map((flashcard, index) => {
+                return (
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Card>
+                      <CardActionArea
+                        onClick={() => {
+                          handleCardClick(index);
+                        }}
+                      >
+                        <CardContent>
+                          <Box
+                            sx={{
+                              perspective: '1000px',
+                              '& > div': {
+                                transition: 'transform 0.6s',
+                                transformStyle: 'preserve-3d',
+                                position: 'relative',
+                                width: '100%',
+                                height: '350px',
+                                // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                                transform: flipped[index]
+                                  ? 'rotateY(180deg)'
+                                  : 'rotateY(0deg)',
+                              },
+                              '& > div > div': {
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                backfaceVisibility: 'hidden',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                padding: 2,
+                                boxSizing: 'border-box',
+                              },
+
+                              '& > div > div:nth-of-type(2)': {
+                                transform: 'rotateY(180deg)',
+                              },
+                              overflowY: 'auto',
+                              // overflowX: 'scroll'
+                              // background:
+                              //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
+                              // border: '1px solid turquoise',
+                            }}
+                          >
+                            <div>
+                              <div className={{ backgroundColor: 'red' }}>
+                                <Typography
+                                  variant='h5'
+                                  component='div'
+                                  sx={{
+                                    // fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    // overflowY: 'scroll',
+                                    // overflowX: 'scroll',
+                                    fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    overflow: 'auto',
+                                    whiteSpace: 'break-spaces',
+                                    wordWrap: 'break-word',
+                                  }}
+                                >
+                                  {flashcard.front}
+                                </Typography>
+                              </div>
+                              <div>
+                                <Typography
+                                  variant='h5'
+                                  component='div'
+                                  sx={{
+                                    // fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    // overflowY: 'scroll',
+                                    // overflowX: 'scroll',
+                                    fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    overflow: 'auto',
+                                    whiteSpace: 'break-spaces',
+                                    wordWrap: 'break-word',
+                                  }}
+                                >
+                                  {/* {flashcard.back} */}
+                                  {/* {flashcard.back.replace(/\s*\[Learn more\]/g, '')} */}
+                                  {flashcard.back
+                                    .match(/\((https?:\/\/[^\s)]+)\)/g)
+                                    ?.map((url, index) => (
+                                      <div key={index}>
+                                        <a
+                                          href={url.slice(1, -1)}
+                                          target='_blank'
+                                          rel='noopener noreferrer'
+                                        >
+                                          {url.slice(1, -1)}
+                                        </a>
+                                        {index <
+                                          flashcard.back.match(
+                                            /\((https?:\/\/[^\s)]+)\)/g
+                                          ).length -
+                                            1 && <br />}{' '}
+                                        {/* Add line break except for the last link */}
+                                      </div>
+                                    ))}
+                                  {flashcard.back.replace(
+                                    /\s*\(https?:\/\/[^\s)]+\)/g,
+                                    ''
+                                  )}
+                                  {/* {backText.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}{' '} */}
+                                </Typography>
+                              </div>
+                            </div>
+                          </Box>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            <Box
+              sx={{
+                mt: 4,
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={handleOpen}
+                sx={{ mb: 2 }}
+              >
+                Save
+              </Button>
+            </Box>
+          </Box>
+        )}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Save Flashcards</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please enter a name for your flashcards collection
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin='dense'
+              label='Collection Name'
+              type='text'
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              variant='outlined'
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}> Cancel</Button>
+            <Button onClick={saveFlashcards}> Save</Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
       <Footer />
-    </Container>
+    </>
   );
 }
