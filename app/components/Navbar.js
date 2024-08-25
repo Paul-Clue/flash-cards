@@ -2,7 +2,16 @@
 
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
-import { Typography, AppBar, Toolbar, Button, Box } from '@mui/material';
+import {
+  Typography,
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Box,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import Menu from './Menu';
 
 export default function Navbar() {
   const router = useRouter();
@@ -17,7 +26,11 @@ export default function Navbar() {
       }}
     >
       <Toolbar>
-        <Button href='/'>
+        {/* <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+      <MenuIcon sx={{color: 'black'}}/>
+    </IconButton> */}
+        <Menu />
+        <Button href='/' sx={{display: {xs: 'none', md: 'flex'}}}>
           <Typography
             variant='h6'
             style={{
@@ -64,7 +77,7 @@ export default function Navbar() {
         >
           <Button
             color='inherit'
-            sx={{ color: 'black', fontWeight: 'bold' }}
+            sx={{ color: 'black', fontWeight: 'bold', display: {xs: 'none', md: 'flex'} }}
             onClick={() => router.push('/generate')}
           >
             {' '}
@@ -72,7 +85,7 @@ export default function Navbar() {
           </Button>
           <Button
             color='inherit'
-            sx={{ color: 'black', fontWeight: 'bold', mr: 3, }}
+            sx={{ color: 'black', fontWeight: 'bold', mr: 3, display: {xs: 'none', md: 'flex'} }}
             onClick={() => router.push('/flashcards')}
           >
             {' '}
