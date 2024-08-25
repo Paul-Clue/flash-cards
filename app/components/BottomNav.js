@@ -2,20 +2,9 @@ import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import InputIcon from '@mui/icons-material/Input';
 import ViewAgendaIcon from '@mui/icons-material/ViewAgenda';
-
-import {
-  Typography,
-  Container,
-  AppBar,
-  Grid,
-  Toolbar,
-  Button,
-  Box,
-  BottomNavigation,
-  BottomNavigationAction,
-} from '@mui/material';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 
 export default function BottomNav() {
   const { user } = useUser();
@@ -37,8 +26,7 @@ export default function BottomNav() {
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
-          setValue(newValue); // Update the value state to reflect the selected icon
-          // Navigate to the corresponding page based on the selected index
+          setValue(newValue);
           if (newValue === 0) goToHome();
           else if (newValue === 1) goToGenerate();
           else if (newValue === 2) goToCards();
@@ -49,7 +37,6 @@ export default function BottomNav() {
           display: { xs: 'flex', md: 'none' },
         }}
         showLabels
-        // className={classes.root}
       >
         <BottomNavigationAction
           label='Home'

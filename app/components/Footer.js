@@ -1,6 +1,4 @@
 'use client';
-
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { Typography, AppBar, Toolbar, Button, Box } from '@mui/material';
 import CopyrightIcon from '@mui/icons-material/Copyright';
@@ -37,55 +35,6 @@ export default function Footer() {
           </Typography>
         </Button>
       </Toolbar>
-
-      {/* <SignedOut>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Button href='/sign-in' sx={{ color: 'black' }}>
-            {' '}
-            Login
-          </Button>
-          <Button href='/sign-up' sx={{ color: 'black' }}>
-            {' '}
-            Signup
-          </Button>
-        </Box>
-      </SignedOut>
-      <SignedIn>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            mr: 2,
-          }}
-        >
-          <Button
-            color='inherit'
-            sx={{ color: 'black', fontWeight: 'bold' }}
-            onClick={() => router.push('/generate')}
-          >
-            {' '}
-            Generate Fast-Cards
-          </Button>
-          <Button
-            color='inherit'
-            sx={{ color: 'black', fontWeight: 'bold', mr: 3, }}
-            onClick={() => router.push('/flashcards')}
-          >
-            {' '}
-            Your Fast-Cards
-          </Button>
-          <UserButton />
-        </Box>
-      </SignedIn> */}
     </AppBar>
   );
 }

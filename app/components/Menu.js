@@ -1,29 +1,13 @@
 import * as React from 'react';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignedIn } from '@clerk/nextjs';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation';
 import { Box } from '@mui/material';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const options = [
-  'Home',
-  'Make Cards',
-  'Collection',
-  // 'Dione',
-  // 'Ganymede',
-  // 'Hangouts Call',
-  // 'Luna',
-  // 'Oberon',
-  // 'Phobos',
-  // 'Pyxis',
-  // 'Sedna',
-  // 'Titania',
-  // 'Triton',
-  // 'Umbriel',
-];
+const options = ['Home', 'Make Cards', 'Collection'];
 
 const ITEM_HEIGHT = 48;
 
@@ -49,7 +33,7 @@ export default function LongMenu() {
   };
 
   return (
-    <Box sx={{display: {xs: 'block', md: 'none'}}}>
+    <Box sx={{ display: { xs: 'block', md: 'none' } }}>
       <div>
         <IconButton
           aria-label='more'
@@ -90,7 +74,13 @@ export default function LongMenu() {
                   : handleClose
               }
             >
-              {option === 'Home' ? 'Home' : option === 'Make Cards' ? <SignedIn>Make Cards</SignedIn> : option === 'Collection' ? <SignedIn>Collection</SignedIn> : null}
+              {option === 'Home' ? (
+                'Home'
+              ) : option === 'Make Cards' ? (
+                <SignedIn>Make Cards</SignedIn>
+              ) : option === 'Collection' ? (
+                <SignedIn>Collection</SignedIn>
+              ) : null}
             </MenuItem>
           ))}
         </Menu>

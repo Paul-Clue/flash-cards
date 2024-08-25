@@ -32,7 +32,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BottomNav from '../components/BottomNav';
 import getStripe from '../../utils/getStripe';
-// import { stripeInstance } from '../../utils/stripe';
 
 export default function Generate() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -90,11 +89,10 @@ export default function Generate() {
     const stripe = await getStripe();
 
     try {
-      // Retrieve customer list by email
       console.log(' Checking subscription for email: ', email);
       const customers = await stripe.customers.list({
         email: email,
-        limit: 1, // Assuming each email corresponds to a single customer
+        limit: 1,
       });
 
       if (customers.data.length === 0) {
@@ -105,7 +103,6 @@ export default function Generate() {
       const customerId = customers.data[0].id;
       console.log('Customer ID: ', customerId);
 
-      // Check for active subscriptions
       const subscriptions = await stripe.subscriptions.list({
         customer: customerId,
         status: 'active',
@@ -189,18 +186,15 @@ export default function Generate() {
 
   return (
     <>
-      {/* // <Container maxWidth='md'> */}
       <Container
         maxWidth='xl'
         disableGutters
         sx={{
           background:
             'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
-          // height: '100vh',
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
-          // justifyContent: 'center',
           alignItems: 'center',
         }}
       >
@@ -213,8 +207,6 @@ export default function Generate() {
             flexDirection: 'column',
             alignItems: 'center',
             width: '70vw',
-            // background:
-            // 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
           }}
         >
           <Typography
@@ -305,7 +297,6 @@ export default function Generate() {
                                 position: 'relative',
                                 width: '100%',
                                 height: '350px',
-                                // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
                                 transform: flipped[index]
                                   ? 'rotateY(180deg)'
                                   : 'rotateY(0deg)',
@@ -326,10 +317,6 @@ export default function Generate() {
                                 transform: 'rotateY(180deg)',
                               },
                               overflowY: 'auto',
-                              // overflowX: 'scroll'
-                              // background:
-                              //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-                              // border: '1px solid turquoise',
                             }}
                           >
                             <div>
@@ -338,11 +325,8 @@ export default function Generate() {
                                   variant='h5'
                                   component='div'
                                   sx={{
-                                    // fontSize: '.8rem',
                                     fontWeight: 'bold',
                                     textAlign: 'center',
-                                    // overflowY: 'scroll',
-                                    // overflowX: 'scroll',
                                     fontSize: '.8rem',
                                     fontWeight: 'bold',
                                     overflow: 'auto',
@@ -358,11 +342,8 @@ export default function Generate() {
                                   variant='h5'
                                   component='div'
                                   sx={{
-                                    // fontSize: '.8rem',
                                     fontWeight: 'bold',
                                     textAlign: 'center',
-                                    // overflowY: 'scroll',
-                                    // overflowX: 'scroll',
                                     fontSize: '.8rem',
                                     fontWeight: 'bold',
                                     overflow: 'auto',
@@ -370,8 +351,6 @@ export default function Generate() {
                                     wordWrap: 'break-word',
                                   }}
                                 >
-                                  {/* {flashcard.back} */}
-                                  {/* {flashcard.back.replace(/\s*\[Learn more\]/g, '')} */}
                                   {flashcard.back
                                     .match(/\((https?:\/\/[^\s)]+)\)/g)
                                     ?.map((url, index) => (
@@ -388,14 +367,12 @@ export default function Generate() {
                                             /\((https?:\/\/[^\s)]+)\)/g
                                           ).length -
                                             1 && <br />}{' '}
-                                        {/* Add line break except for the last link */}
                                       </div>
                                     ))}
                                   {flashcard.back.replace(
                                     /\s*\(https?:\/\/[^\s)]+\)/g,
                                     ''
                                   )}
-                                  {/* {backText.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}{' '} */}
                                 </Typography>
                               </div>
                             </div>

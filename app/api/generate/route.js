@@ -1,9 +1,7 @@
-import { NextResponse } from "next/server";
-import OpenAI from "openai";
+import { NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  // project: 'Default project',
-  // organization: "org-dif3dIvFrHgDzBOLlfniEvYf",
   apiKey: process.env.FASTCARD_OPENAI_API_KEY,
 });
 
@@ -35,21 +33,21 @@ export async function POST(req) {
     const data = await req.text();
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: 'gpt-4o',
       messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: data },
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: data },
       ],
     });
 
     console.log(completion.choices[0].message.content);
 
     const messageContent = completion.choices[0].message.content;
-    if (messageContent === "I need more information.") {
-      return NextResponse.json({ error: "I need more information." });
+    if (messageContent === 'I need more information.') {
+      return NextResponse.json({ error: 'I need more information.' });
     }
 
-    const jsonStartIndex = messageContent.indexOf("{");
+    const jsonStartIndex = messageContent.indexOf('{');
     const jsonString = messageContent.slice(jsonStartIndex);
 
     try {
@@ -57,16 +55,16 @@ export async function POST(req) {
 
       return NextResponse.json(flashcards.flashcards);
     } catch (error) {
-      console.error("Failed to parse JSON:", error);
+      console.error('Failed to parse JSON:', error);
       return NextResponse.json(
-        { error: "Failed to parse flashcards JSON" },
+        { error: 'Failed to parse flashcards JSON' },
         { status: 500 }
       );
     }
   } catch (error) {
-    console.error("Failed to generate flashcards:", error);
+    console.error('Failed to generate flashcards:', error);
     return NextResponse.json(
-      { error: "Failed to generate flashcards" },
+      { error: 'Failed to generate flashcards' },
       { status: 500 }
     );
   }

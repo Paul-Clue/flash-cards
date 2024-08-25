@@ -1,18 +1,9 @@
 'use client';
 import Image from 'next/image';
 import getStripe from '../utils/getStripe';
-import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
-import { useAuth } from '@clerk/clerk-react';
-import {
-  Typography,
-  Container,
-  AppBar,
-  Grid,
-  Toolbar,
-  Button,
-  Box,
-} from '@mui/material';
+import { Typography, Container, Grid, Button, Box } from '@mui/material';
 import Head from 'next/head';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -21,8 +12,6 @@ import BottomNav from './components/BottomNav';
 export default function Home() {
   const { user } = useUser();
   const [subscription, setSubscription] = useState(false);
-
-  // const stripe = stripeInstance();
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout_sessions', {
@@ -44,11 +33,10 @@ export default function Home() {
   const checkSubscription = async (email) => {
     const stripe = await getStripe();
     try {
-      // Retrieve customer list by email
       console.log(' Checking subscription for email: ', email);
       const customers = await stripe.customers.list({
         email: email,
-        limit: 1, // Assuming each email corresponds to a single customer
+        limit: 1,
       });
 
       if (customers.data.length === 0) {
@@ -59,7 +47,6 @@ export default function Home() {
       const customerId = customers.data[0].id;
       console.log('Customer ID: ', customerId);
 
-      // Check for active subscriptions
       const subscriptions = await stripe.subscriptions.list({
         customer: customerId,
         status: 'active',
@@ -67,11 +54,9 @@ export default function Home() {
 
       if (subscriptions.data.length > 0) {
         console.log('Subscription found: ', subscriptions.data[0]);
-        // localStorage.setItem('subscription', true);
         setSubscription(true);
       } else {
         console.log('No active subscription found.');
-        // localStorage.removeItem('subscription');
         setSubscription(false);
       }
     } catch (error) {
@@ -109,14 +94,12 @@ export default function Home() {
           top: '59%',
           left: '79%',
           transform: 'translate(-50%, -50%)',
-          // transform: 'translate(-50%, -50%) rotate(-50deg)',
           opacity: '100%',
           zIndex: 0,
           display: { xs: 'none', md: 'block' },
         }}
       >
         <Image
-          // src='/flashcards2.png'
           src='/flashcards3.webp'
           alt='Blank flashcards'
           width={500}
@@ -133,9 +116,6 @@ export default function Home() {
           mb: 10,
           mt: 10,
           display: { xs: 'block', md: 'none' },
-          // position: 'relative',
-          // right: '20%',
-          // zIndex: 10,
         }}
       >
         <Typography
@@ -284,7 +264,6 @@ export default function Home() {
                 p: 3,
                 border: '5px solid',
                 borderColor: 'grey.300',
-                // backgroundColor: 'whitesmoke',
                 borderRadius: 2,
                 boxShadow: 3,
               }}
@@ -297,7 +276,11 @@ export default function Home() {
               </Typography>
               <Typography>Create up to 5 Fast-Card collections.</Typography>
               {user ? (
-                <Typography variant='body1' color='green' sx={{ mt: 2 }}>
+                <Typography
+                  variant='body1'
+                  color='green'
+                  sx={{ mt: 2, mb: 1.8 }}
+                >
                   You are using the free plan.
                 </Typography>
               ) : (

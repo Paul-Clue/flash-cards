@@ -153,14 +153,10 @@ export default function Flashcard() {
         sx={{
           background:
             'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
-          // height: '100vh',
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
-          // justifyContent: 'center',
           alignItems: 'center',
-          // padding: 5,
-          // paddingTop: 0,
         }}
       >
         <Navbar />
@@ -185,19 +181,11 @@ export default function Flashcard() {
               <Card>
                 <CardActionArea>
                   <CardContent
-                    // onClick={() => {
-                    //   handleCardClick(flashcard.name, flashcard.cards);
-                    // }}
                     sx={{
                       fontWeight: 'bold',
-                      // background:
-                      //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-                      // border: '1px solid turquoise',
                     }}
                   >
-                    {/* <Box> */}
                     <DeleteOutlinedIcon
-                      // onClick={() => deleteFlashcardSet(flashcard.name)}
                       onClick={() => deleteFlashcardCollection(flashcard.name)}
                       sx={{
                         color: 'red',
@@ -207,7 +195,6 @@ export default function Flashcard() {
                         zIndex: 10,
                       }}
                     />
-                    {/* </Box> */}
                     <Typography
                       variant='h6'
                       onClick={() => {
