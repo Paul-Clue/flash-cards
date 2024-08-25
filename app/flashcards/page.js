@@ -23,7 +23,7 @@ import {
 } from '@mui/material';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-// import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
+import BottomNav from '../components/BottomNav';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export default function Flashcard() {
@@ -103,32 +103,6 @@ export default function Flashcard() {
       )}`
     );
   };
-
-  // const deleteFlashcardSet = async (collectionName) => {
-  //   if (!isSignedIn || !user) {
-  //     alert('You must be signed in to delete flashcards');
-  //     return;
-  //   }
-
-  //   const userDocRef = doc(collection(db, 'users'), user.id);
-  //   const colRef = collection(userDocRef, collectionName);
-
-  //   // Delete the collection
-  //   const batch = writeBatch(db);
-  //   const querySnapshot = await getDocs(colRef);
-
-  //   querySnapshot.forEach((doc) => {
-  //     batch.delete(doc.ref);
-  //   });
-
-  //   await batch.commit();
-  //   console.log(`Flashcard set "${collectionName}" deleted successfully.`);
-
-  //   // Update the UI by removing the deleted collection from state
-  //   setFlashcards((prevFlashcards) =>
-  //     prevFlashcards.filter((flashcard) => flashcard.name !== collectionName)
-  //   );
-  // };
 
   const deleteFlashcardCollection = async (collectionName) => {
     if (!isSignedIn || !user) {
@@ -257,6 +231,7 @@ export default function Flashcard() {
         </Grid>
       </Container>
       <Footer />
+      <BottomNav />
     </>
   );
 }

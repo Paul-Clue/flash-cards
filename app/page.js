@@ -16,7 +16,7 @@ import {
 import Head from 'next/head';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-// import { stripeInstance } from '@/utils/stripe';
+import BottomNav from './components/BottomNav';
 
 export default function Home() {
   const { user } = useUser();
@@ -92,16 +92,9 @@ export default function Home() {
       maxWidth='xl'
       disableGutters
       sx={{
-        // background:
-        // "linear-gradient(to bottom, rgb(239, 245, 231), rgb(198, 184, 162))",
-        // background:
-        //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
         background:
           'linear-gradient(to top right, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245) )',
-        // background:
-        //   'radial-gradient(circle 800px at center left, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274))',
-        // background: 'radial-gradient(circle, rgb(245, 245, 245), rgb(128, 128, 128))',
-        // padding: 0,
+
         height: '100%',
       }}
     >
@@ -266,7 +259,8 @@ export default function Home() {
             <Typography>
               {' '}
               Our AI intelligently breaks down your text into concise
-              Fast-Cards, perfect for studying. Some Fast-Cards will generate Wikipedia and/or YouTube links for a deeper dive into the topic.
+              Fast-Cards, perfect for studying. Some Fast-Cards will generate
+              Wikipedia and/or YouTube links for a deeper dive into the topic.
             </Typography>
           </Grid>
           <Grid item xs={12} md={4} sx={{ zIndex: 10 }}>
@@ -318,18 +312,6 @@ export default function Home() {
                   Choose Basic
                 </Button>
               )}
-              {/* <Typography>
-                {' '}
-                Access to basic flashcard features and limited storage
-              </Typography> */}
-              {/* <Button
-                variant='contained'
-                color='primary'
-                sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-              >
-                {' '}
-                Choose Basic
-              </Button> */}
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -367,20 +349,12 @@ export default function Home() {
                   Choose Pro
                 </Button>
               )}
-              {/* <Button
-                variant='contained'
-                color='primary'
-                sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-                onClick={handleSubmit}
-              >
-                {' '}
-                Choose Pro
-              </Button> */}
             </Box>
           </Grid>
         </Grid>
       </Box>
       <Footer />
+      <BottomNav />
     </Container>
   );
 }

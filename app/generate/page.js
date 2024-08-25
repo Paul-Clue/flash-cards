@@ -30,6 +30,7 @@ import {
 } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import BottomNav from '../components/BottomNav';
 import getStripe from '../../utils/getStripe';
 // import { stripeInstance } from '../../utils/stripe';
 
@@ -44,18 +45,6 @@ export default function Generate() {
   const [needsMoreInfo, setNeedsMoreInfo] = useState(false);
   const router = useRouter();
   const [subscription, setSubscription] = useState(false);
-
-  // const stripe = new Stripe(
-  //   "sk_test_51PoZ1gA1Bes7OdcoHZ5Y1pfe3wOAlNVfdz9ziYGAwFKjXCvtMMPYSh5cmgoVUCUDCc5G8IJvOK99HdSdnMWzZ0VS00SaZlixMb",
-  //   {
-  //     apiVersion: "2024-06-20",
-  //   }
-  // );
-
-  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  //   apiVersion: '2022-11-15',
-  // })
-  // const stripe = stripeInstance();
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -72,53 +61,6 @@ export default function Generate() {
           return;
         }
         setFlashcards(data);
-        // setFlashcards(data.map(datum => ({
-        //   ...datum,
-        //   back: datum.back.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '') // Remove Wikipedia reference
-        // })));
-
-        // setFlashcards(data.map(datum => ({
-        //   ...datum,
-        //   back: datum.back
-        //     .replace(/\s*\(https?:\/\/[^\s)]+\)/g, '') // Remove Wikipedia reference
-        //     .replace(/\s*\[Learn more\]/g, '') // Remove [Learn more] text
-        // })));
-
-        // Active links
-        // setFlashcards(
-        //   data.map((datum) => {
-        //     let backText = datum.back
-        //     //  backText = datum.back.replace(/\s*\[You Tube\]/g, ''); // Remove [Learn more] text
-        //     const urlMatches = backText.match(/\((https?:\/\/[^\s)]+)\)/g); // Extract URL
-
-        //     return {
-        //       ...datum,
-        //       back: (
-        //         <>
-        //           {backText.replace(/\s*\(https?:\/\/[^\s)]+\)/g, '')}{' '}
-        //           {/* Remove Wikipedia reference */}
-        //           {/* {urlMatches && urlMatches.map((url, index) => (
-        //           <a key={index} href={url.slice(1, -1)} target="_blank" rel="noopener noreferrer">
-        //             {url.slice(1, -1)}
-        //           </a>
-        //         ))} */}
-        //         {urlMatches && urlMatches.map((url, index) => (
-        //           <div key={index}>
-        //             <a href={url.slice(1, -1)} target="_blank" rel="noopener noreferrer">
-        //               {url.slice(1, -1)}
-        //             </a>
-        //             {index < urlMatches.length - 1 && <br />} {/* Add line break except for the last link */}
-        //           </div>
-        //         ))}
-        //         </>
-        //       ),
-        //     };
-        //   })
-        // );
-        console.log(
-          'data',
-          flashcards.map((datum) => datum.back)
-        );
       })
       .catch((error) => {
         console.error('Failed to generate flashcards:', error);
@@ -507,6 +449,7 @@ export default function Generate() {
         </Dialog>
       </Container>
       <Footer />
+      <BottomNav />
     </>
   );
 }
