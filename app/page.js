@@ -84,8 +84,9 @@ export default function Home() {
       }}
     >
       <Head>
-        <title>Flashcard SaaS</title>
-        <meta name='description' content='Create flashcard from your text' />
+        <title>Fast-Cards</title>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name='description' content='Create quick hits of knowledge on any topic or subject matter.' />
       </Head>
       <Navbar />
       <Box
