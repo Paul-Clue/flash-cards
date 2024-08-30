@@ -55,7 +55,7 @@ export async function POST(req) {
 
       return NextResponse.json(flashcards.flashcards);
     } catch (error) {
-      console.error('Failed to parse JSON:', error);
+      console.error('Failed to parse JSON:', error, 'Response:', messageContent);
       return NextResponse.json(
         { error: 'Failed to parse flashcards JSON' },
         { status: 500 }
