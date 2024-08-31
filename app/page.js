@@ -77,8 +77,10 @@ export default function Home() {
       maxWidth='xl'
       disableGutters
       sx={{
+        // background:
+        //   'linear-gradient(to top right, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245) )',
         background:
-          'linear-gradient(to top right, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245) )',
+          'rgb(175, 238, 238)',
 
         height: '100%',
       }}
@@ -141,7 +143,8 @@ export default function Home() {
             variant='contained'
             href='/sign-in'
             color='primary'
-            sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            sx={{ mt: 2,}}
           >
             Get Started
           </Button>
@@ -151,7 +154,8 @@ export default function Home() {
             variant='contained'
             href='/generate'
             color='primary'
-            sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            sx={{ mt: 2,}}
           >
             Start making cards
           </Button>
@@ -191,7 +195,8 @@ export default function Home() {
             variant='contained'
             href='/sign-in'
             color='primary'
-            sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            sx={{ mt: 2, }}
           >
             Get Started
           </Button>
@@ -201,7 +206,8 @@ export default function Home() {
             variant='contained'
             href='/generate'
             color='primary'
-            sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+            sx={{ mt: 2,}}
           >
             Start making cards
           </Button>
@@ -262,9 +268,11 @@ export default function Home() {
           <Grid item xs={12} md={6}>
             <Box
               sx={{
+                // backgroundColor: 'rgb(0, 128, 128)',
+                backgroundColor: 'whitesmoke',
                 p: 3,
-                border: '5px solid',
-                borderColor: 'grey.300',
+                // border: '5px solid',
+                // borderColor: 'grey.300',
                 borderRadius: 2,
                 boxShadow: 3,
               }}
@@ -301,9 +309,10 @@ export default function Home() {
           <Grid item xs={12} md={6}>
             <Box
               sx={{
+                backgroundColor: 'whitesmoke',
                 p: 3,
-                border: '5px solid',
-                borderColor: 'grey.300',
+                // border: '5px solid',
+                // borderColor: 'grey.300',
                 borderRadius: 2,
                 boxShadow: 3,
               }}
@@ -326,7 +335,8 @@ export default function Home() {
                 <Button
                   variant='contained'
                   color='primary'
-                  sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+                  // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+                  sx={{ mt: 2,}}
                   onClick={handleSubmit}
                 >
                   {' '}

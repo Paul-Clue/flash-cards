@@ -33,8 +33,7 @@ export default function FlashcardPage() {
         maxWidth='xl'
         disableGutters
         sx={{
-          background:
-            'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          background: 'rgb(175, 238, 238)',
           // height: '100vh',
           minHeight: '100vh',
           display: 'flex',
@@ -189,8 +188,8 @@ export default function FlashcardPage() {
             </Grid>
           </Box>
         )}
+        <Footer />
       </Container>
-      <Footer />
       <BottomNav />
     </>
   );

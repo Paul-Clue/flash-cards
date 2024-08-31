@@ -151,12 +151,15 @@ export default function Flashcard() {
         maxWidth='xl'
         disableGutters
         sx={{
-          background:
-            'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          // background:
+          //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          background: 'rgb(175, 238, 238)',
+
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          flex: '1',
         }}
       >
         <Navbar />
@@ -175,7 +178,7 @@ export default function Flashcard() {
             Your Fast-Card Groups
           </Typography>
         </Box>
-        <Grid container spacing={3} sx={{ mt: 4, padding: 5 }}>
+        <Grid container spacing={3} sx={{ mt: 4, padding: 5, flex: '1' }}>
           {flashcards.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card>
@@ -216,8 +219,8 @@ export default function Flashcard() {
             </Grid>
           ))}
         </Grid>
+        <Footer />
       </Container>
-      <Footer />
       <BottomNav />
     </>
   );

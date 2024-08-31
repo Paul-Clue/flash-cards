@@ -190,8 +190,10 @@ export default function Generate() {
         maxWidth='xl'
         disableGutters
         sx={{
-          background:
-            'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          // background:
+          //   'linear-gradient(to top right, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245) )',
+          background: 'rgb(175, 238, 238)',
+
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
@@ -201,6 +203,7 @@ export default function Generate() {
         <Navbar />
         <Box
           sx={{
+            flex: 1,
             mt: 4,
             mb: 3,
             display: 'flex',
@@ -424,8 +427,10 @@ export default function Generate() {
             <Button onClick={saveFlashcards}> Save</Button>
           </DialogActions>
         </Dialog>
+        {/* <Footer /> */}
+        <Footer />
       </Container>
-      <Footer />
+      {/* <Footer /> */}
       <BottomNav />
     </>
   );
