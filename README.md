@@ -31,7 +31,7 @@ A web-based flashcard application that allows users to create, manage, and study
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/flashcard-app.git
+   git clone https://github.com/Paul-Clue/flashcard-app.git
    cd flashcard-app
    ```
 
