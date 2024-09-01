@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Flashcard Application
+
+A web-based flashcard application that allows users to create, manage, and study flashcards on various topics. Built with Next.js, Firebase, and Material-UI, this application provides a user-friendly interface for learning and memorization.
+
+## Features
+
+- User authentication with Clerk
+- Create and manage flashcard collections
+- View and study flashcards
+- Responsive design for mobile and desktop
+- Easy navigation with a bottom navigation bar
+
+## Technologies Used
+
+- **Frontend**: Next.js, React, Material-UI
+- **Backend**: Firebase Firestore
+- **Authentication**: Clerk
+- **Icons**: Material-UI Icons
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v14 or later)
+- npm or yarn
+- Firebase project with Firestore enabled
+- Clerk account for user authentication
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```bash
+   git clone https://github.com/yourusername/flashcard-app.git
+   cd flashcard-app
+   ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Set up environment variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   Create a `.env.local` file in the root of the project and add your Firebase and Clerk credentials:
 
-## Deploy on Vercel
+   ```plaintext
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
+   CLERK_FRONTEND_API=your_clerk_frontend_api
+   CLERK_API_KEY=your_clerk_api_key
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Start the development server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. Open your browser and navigate to `http://localhost:3000`.
+
+## Usage
+
+- Sign in or create an account using Clerk.
+- Create new flashcard collections and add flashcards.
+- Click on a flashcard collection to view and study the flashcards.
+- Use the delete option to remove collections as needed.
+
+## Deployment
+
+This application is deployed on Vercel. To deploy your own version:
+
+1. Push your code to a GitHub repository.
+2. Sign up for a Vercel account and connect your GitHub repository.
+3. Configure environment variables in the Vercel dashboard.
+4. Deploy your application.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or features.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Next.js](https://nextjs.org/)
+- [Firebase](https://firebase.google.com/)
+- [Clerk](https://clerk.dev/)
+- [Material-UI](https://mui.com/)
