@@ -221,9 +221,27 @@ export default function Generate() {
                 '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
               fontWeight: 'bolder',
               mb: 5,
+              textAlign: 'center',
+              display: {xs: 'flex', md: 'none'}
             }}
           >
-            {' '}
+            Generate
+            {<br />}
+            Fast-Cards
+          </Typography>
+          <Typography
+            variant='h4'
+            sx={{
+              color: 'black',
+              fontWeight: 'bold',
+              textShadow:
+                '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+              fontWeight: 'bolder',
+              mb: 5,
+              textAlign: 'center',
+              display: {xs: 'none', md: 'flex'}
+            }}
+          >
             Generate Fast-Cards
           </Typography>
           <Paper
@@ -279,8 +297,8 @@ export default function Generate() {
         </Box>
         {flashcards.length > 0 && (
           <Box sm={{ mt: 4 }}>
-            <Typography variant='h5'>Flashcards Preview</Typography>
-            <Grid container spacing={3}>
+            <Typography variant='h5'>Fast-Cards Preview</Typography>
+            <Grid container spacing={3} sx={{display: {xs: 'flex', md: 'none', padding: 30}}}>
               {flashcards.map((flashcard, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
@@ -291,6 +309,115 @@ export default function Generate() {
                         }}
                       >
                         <CardContent>
+                          <Box
+                            sx={{
+                              perspective: '1000px',
+                              '& > div': {
+                                transition: 'transform 0.6s',
+                                transformStyle: 'preserve-3d',
+                                position: 'relative',
+                                width: '100%',
+                                height: '350px',
+                                transform: flipped[index]
+                                  ? 'rotateY(180deg)'
+                                  : 'rotateY(0deg)',
+                              },
+                              '& > div > div': {
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                backfaceVisibility: 'hidden',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                padding: 2,
+                                boxSizing: 'border-box',
+                              },
+
+                              '& > div > div:nth-of-type(2)': {
+                                transform: 'rotateY(180deg)',
+                              },
+                              overflowY: 'auto',
+                            }}
+                          >
+                            <div>
+                              <div className={{ backgroundColor: 'red' }}>
+                                <Typography
+                                  variant='h5'
+                                  component='div'
+                                  sx={{
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    overflow: 'auto',
+                                    whiteSpace: 'break-spaces',
+                                    wordWrap: 'break-word',
+                                  }}
+                                >
+                                  {flashcard.front}
+                                </Typography>
+                              </div>
+                              <div>
+                                <Typography
+                                  variant='h5'
+                                  component='div'
+                                  sx={{
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                    overflow: 'auto',
+                                    whiteSpace: 'break-spaces',
+                                    wordWrap: 'break-word',
+                                  }}
+                                >
+                                  {flashcard.back
+                                    .match(/\((https?:\/\/[^\s)]+)\)/g)
+                                    ?.map((url, index) => (
+                                      <div key={index}>
+                                        <a
+                                          href={url.slice(1, -1)}
+                                          target='_blank'
+                                          rel='noopener noreferrer'
+                                        >
+                                          {url.slice(1, -1)}
+                                        </a>
+                                        {index <
+                                          flashcard.back.match(
+                                            /\((https?:\/\/[^\s)]+)\)/g
+                                          ).length -
+                                            1 && <br />}{' '}
+                                      </div>
+                                    ))}
+                                  {flashcard.back.replace(
+                                    /\s*\(https?:\/\/[^\s)]+\)/g,
+                                    ''
+                                  )}
+                                </Typography>
+                              </div>
+                            </div>
+                          </Box>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            <Grid container spacing={3} sx={{display: {xs: 'none', md: 'block'}, padding: 5}}>
+              {flashcards.map((flashcard, index) => {
+                return (
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Card>
+                      <CardActionArea
+                        onClick={() => {
+                          handleCardClick(index);
+                        }}
+                      >
+                        <CardContent
+                          sx={{display: {xs: 'none', md: 'block'}}}
+                        >
                           <Box
                             sx={{
                               perspective: '1000px',

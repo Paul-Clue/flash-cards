@@ -173,6 +173,7 @@ export default function Flashcard() {
               textShadow:
                 '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
               fontWeight: 'bolder',
+              textAlign: 'center'
             }}
           >
             Your Fast-Card Groups
