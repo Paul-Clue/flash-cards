@@ -35,6 +35,19 @@ export default function Footer() {
           </Typography>
         </Button>
       </Toolbar>
+      <Button href='/privacy-policy'>
+        <Typography
+          variant='h6'
+          style={{
+            flexGrow: 1,
+            color: 'black',
+            fontSize: '.8em',
+            mr: 10,
+          }}
+        >
+          Privacy Policy
+        </Typography>
+      </Button>
     </AppBar>
   );
 }
