@@ -253,18 +253,18 @@ export default function Generate() {
                 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
             }}
           >
-            {isLoading && (
+            {/* {isLoading && (
               <CircularProgress
                 size={80}
                 sx={{
                   position: 'absolute',
                   top: '50%',
-                  left: '50%',
+                  left: '40%',
                   transform: 'translate(-50%, -50%)',
                   zIndex: 1000,
                 }}
               />
-            )}
+            )} */}
             <TextField
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -285,7 +285,7 @@ export default function Generate() {
               sx={{ border: '1px solid', borderColor: 'grey.300' }}
               disabled={isLoading}
             >
-              Submit
+             {isLoading ? <CircularProgress size={20} /> : 'Submit'}
             </Button>
 
             {needsMoreInfo && (
@@ -405,7 +405,7 @@ export default function Generate() {
                 );
               })}
             </Grid>
-            <Grid container spacing={3} sx={{display: {xs: 'none', md: 'block'}, padding: 5}}>
+            <Grid container spacing={3} sx={{display: {xs: 'none', md: 'flex'}, padding: 5}}>
               {flashcards.map((flashcard, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
@@ -415,9 +415,7 @@ export default function Generate() {
                           handleCardClick(index);
                         }}
                       >
-                        <CardContent
-                          sx={{display: {xs: 'none', md: 'block'}}}
-                        >
+                        <CardContent>
                           <Box
                             sx={{
                               perspective: '1000px',
