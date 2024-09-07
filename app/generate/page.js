@@ -150,7 +150,7 @@ export default function Generate() {
 
       if (collections.length >= 5 && !subscription) {
         alert(
-          'You already have 3 collections. Upgrade to Pro Plan to save more'
+          'You already have 5 collections. Upgrade to Pro Plan to save more'
         );
         return;
       }
