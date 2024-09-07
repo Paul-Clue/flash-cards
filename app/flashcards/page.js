@@ -182,7 +182,11 @@ export default function Flashcard() {
         <Grid container spacing={3} sx={{ mt: 4, padding: 5, flex: '1' }}>
           {flashcards.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card>
+              <Card
+                sx={{
+                  display: {xs: 'none', md: 'flex'},
+                }}
+              >
                 <CardActionArea>
                   <CardContent
                     sx={{
@@ -195,6 +199,45 @@ export default function Flashcard() {
                         color: 'red',
                         position: 'relative',
                         left: 350,
+                        top: -8,
+                        zIndex: 10,
+                      }}
+                    />
+                    <Typography
+                      variant='h6'
+                      onClick={() => {
+                        handleCardClick(flashcard.name, flashcard.cards);
+                      }}
+                      sx={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        mt: -3,
+                      }}
+                    >
+                      {flashcard.name}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card
+                sx={{
+                  display: {xs: 'flex', md: 'none'},
+                }}
+              >
+                <CardActionArea>
+                  <CardContent
+                    sx={{
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    <DeleteOutlinedIcon
+                      onClick={() => deleteFlashcardCollection(flashcard.name)}
+                      sx={{
+                        color: 'red',
+                        position: 'relative',
+                        left: 255,
                         top: -8,
                         zIndex: 10,
                       }}
