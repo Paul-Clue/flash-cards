@@ -35,14 +35,13 @@ export default function Footer() {
           </Typography>
         </Button>
       </Toolbar>
-      <Button href='/privacy-policy'>
+      <Button href='/privacy-policy' sx={{ mr: 3 }}>
         <Typography
           variant='h6'
           style={{
             flexGrow: 1,
             color: 'black',
             fontSize: '.8em',
-            mr: 10,
           }}
         >
           Privacy Policy
