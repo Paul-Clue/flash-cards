@@ -65,16 +65,23 @@ export default function FlashcardPage() {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
                     <Card
-                      sx={
-                        {
-                          // background: 'transparent',
-                          // border: '1px solid turquoise',
-                        }
-                      }
+                      elevation={0}
+                      sx={{
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none',
+                        border: 'none',
+                        // '& .MuiCardContent-root': {
+                        //   padding: 0,
+                        // },
+                      }}
                     >
                       <CardActionArea
-                        onClick={() => {
-                          handleCardClick(index);
+                        disableRipple
+                        disableTouchRipple
+                        disableFocusRipple
+                        onClick={() => handleCardClick(index)}
+                        sx={{
+                          backgroundColor: 'transparent'
                         }}
                       >
                         <CardContent>
@@ -107,13 +114,9 @@ export default function FlashcardPage() {
                               '& > div > div:nth-of-type(2)': {
                                 transform: 'rotateY(180deg)',
                               },
-                              // overflowY: 'scroll',
-                              // background:
-                              //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
-                              // border: '1px solid turquoise',
                             }}
                           >
-                            <div>
+                            <div style={{ background: 'whitesmoke' }}>
                               <div>
                                 <Typography
                                   variant='h5'

@@ -302,10 +302,24 @@ export default function Generate() {
               {flashcards.map((flashcard, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Card>
+                    <Card
+                      elevation={0}
+                      sx={{
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none',
+                        border: 'none',
+                        // '& .MuiCardContent-root': {
+                        //   padding: 0,
+                        // },
+                      }}
+                    >
                       <CardActionArea
-                        onClick={() => {
-                          handleCardClick(index);
+                        disableRipple
+                        disableTouchRipple
+                        disableFocusRipple
+                        onClick={() => handleCardClick(index)}
+                        sx={{
+                          backgroundColor: 'transparent'
                         }}
                       >
                         <CardContent>
@@ -340,7 +354,7 @@ export default function Generate() {
                               overflowY: 'auto',
                             }}
                           >
-                            <div>
+                            <div style={{ background: 'whitesmoke' }}>
                               <div className={{ backgroundColor: 'red' }}>
                                 <Typography
                                   variant='h5'
@@ -409,10 +423,24 @@ export default function Generate() {
               {flashcards.map((flashcard, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Card>
+                    <Card
+                      elevation={0}
+                      sx={{
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none',
+                        border: 'none',
+                        // '& .MuiCardContent-root': {
+                        //   padding: 0,
+                        // },
+                      }}
+                    >
                       <CardActionArea
-                        onClick={() => {
-                          handleCardClick(index);
+                        disableRipple
+                        disableTouchRipple
+                        disableFocusRipple
+                        onClick={() => handleCardClick(index)}
+                        sx={{
+                          backgroundColor: 'transparent'
                         }}
                       >
                         <CardContent>
@@ -447,7 +475,7 @@ export default function Generate() {
                               overflowY: 'auto',
                             }}
                           >
-                            <div>
+                            <div style={{ background: 'whitesmoke' }}>
                               <div className={{ backgroundColor: 'red' }}>
                                 <Typography
                                   variant='h5'
