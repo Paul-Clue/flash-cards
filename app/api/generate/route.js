@@ -20,6 +20,7 @@ Your task is to generate concise and effective flashcards for studying based on 
 10. Aim to create a balanced set of flashcards that cover the topic comprehensively.
 11. Add a link under the answer at the back of the flashcard that connects to a wikipedia page about the question on the front of the card and a link to a youtube video about the question on the front of the card.
 13. Always generate at least 12 flashcards.
+14. Do not add any labeling or text for the YouTube and Wikipedia links.
 Always return your response in the following strict JSON format without any additional text or commentary:
 { 
   "flashcards" : [{

@@ -184,6 +184,25 @@ export default function Generate() {
     router.push('/flashcards');
   };
 
+  const convertUrlsToLinks = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    
+    return parts.map((part, index) => {
+      if (urlRegex.test(part)) {
+        return (
+          <Box key={index} sx={{ mt: 1, mb: 1 }}>
+            <a href={part} target="_blank" rel="noopener noreferrer">
+              {part}
+            </a>
+          </Box>
+        );
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
+
   return (
     <>
       <Container
@@ -507,7 +526,7 @@ export default function Generate() {
                                     wordWrap: 'break-word',
                                   }}
                                 >
-                                  {flashcard.back
+                                  {/* {flashcard.back
                                     .match(/\((https?:\/\/[^\s)]+)\)/g)
                                     ?.map((url, index) => (
                                       <div key={index}>
@@ -528,7 +547,8 @@ export default function Generate() {
                                   {flashcard.back.replace(
                                     /\s*\(https?:\/\/[^\s)]+\)/g,
                                     ''
-                                  )}
+                                  )} */}
+                                  {convertUrlsToLinks(flashcard.back)}
                                 </Typography>
                               </div>
                             </div>
