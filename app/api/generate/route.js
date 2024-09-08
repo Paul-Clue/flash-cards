@@ -41,8 +41,6 @@ export async function POST(req) {
       ],
     });
 
-    console.log(completion.choices[0].message.content);
-
     const messageContent = completion.choices[0].message.content;
     if (messageContent === 'I need more information.') {
       return NextResponse.json({ error: 'I need more information.' });

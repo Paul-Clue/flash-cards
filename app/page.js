@@ -31,37 +31,65 @@ export default function Home() {
   };
 
   const checkSubscription = async (email) => {
-    const stripe = await getStripe();
+    // const stripe = await getStripe();
+    // console.log('stripe: ', stripe.customer);
+    // try {
+    //   console.log(' Checking subscription for email: ', email);
+    //   const customers = await stripe.customers.list({
+    //     email: email,
+    //     limit: 1,
+    //   });
+
+    //   if (customers.data.length === 0) {
+    //     console.log('No customer found with this email.');
+    //     return;
+    //   }
+
+    //   const customerId = customers.data[0].id;
+    //   console.log('Customer ID: ', customerId);
+    //   const subscriptions = await stripe.subscriptions.list({
+    //     customer: customerId,
+    //     status: 'active',
+    //   });
+
+    //   if (subscriptions.data.length > 0) {
+    //     console.log('Subscription found: ', subscriptions.data[0]);
+    //     setSubscription(true);
+    //   } else {
+    //     console.log('No active subscription found.');
+    //     setSubscription(false);
+    //   }
+    // } catch (error) {
+    //   console.error('Error checking subscription', error);
+    // }
     try {
-      console.log(' Checking subscription for email: ', email);
-      const customers = await stripe.customers.list({
-        email: email,
-        limit: 1,
+      const response = await fetch('/api/checkSubscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       });
-
-      if (customers.data.length === 0) {
-        console.log('No customer found with this email.');
-        return;
+  
+      if (!response.ok) {
+        throw new Error('Failed to check subscription');
       }
-
-      const customerId = customers.data[0].id;
-      console.log('Customer ID: ', customerId);
-
-      const subscriptions = await stripe.subscriptions.list({
-        customer: customerId,
-        status: 'active',
-      });
-
-      if (subscriptions.data.length > 0) {
-        console.log('Subscription found: ', subscriptions.data[0]);
-        setSubscription(true);
-      } else {
-        console.log('No active subscription found.');
-        setSubscription(false);
-      }
+  
+      const data = await response.json();
+      return data.hasActiveSubscription;
     } catch (error) {
-      console.error('Error checking subscription', error);
+      console.error('Error checking subscription:', error);
+      return false;
     }
+  };
+  
+  // Usage
+  const handleSubscriptionCheck = async () => {
+    const userEmail = user.primaryEmailAddress.emailAddress; // Get this from your authentication system
+    const isSubscribed = await checkSubscription(userEmail);
+    setSubscription(isSubscribed);
+    console.log('User is subscribed:', isSubscribed);
+    // Update your UI based on the subscription status
   };
 
   useEffect(() => {
@@ -69,7 +97,8 @@ export default function Home() {
       return;
     }
 
-    checkSubscription(user.primaryEmailAddress.emailAddress);
+    // checkSubscription(user.primaryEmailAddress.emailAddress);
+    handleSubscriptionCheck();
   }, [user]);
 
   return (
@@ -328,7 +357,7 @@ export default function Home() {
                 Unlimited Fast-Cards and storage, with priority support.
               </Typography>
               {subscription ? (
-                <Typography variant='body1' color='green' sx={{ mt: 2 }}>
+                <Typography variant='body1' color='green' sx={{ mt: 2, pb: 1.8}}>
                   You are already subscribed to the Pro plan.
                 </Typography>
               ) : (
