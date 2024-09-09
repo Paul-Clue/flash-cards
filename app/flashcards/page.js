@@ -25,15 +25,17 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BottomNav from '../components/BottomNav';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Flashcard() {
   const { isLoading, isSignedIn, user } = useUser();
+  const [loading, setLoading] = useState(false);
   const [flashcards, setFlashcards] = useState([]);
   const router = useRouter();
 
   const getFlashcards = async () => {
     if (!user) return;
-
+    setLoading(true);
     const docRef = doc(db, 'users', user.id);
     const docSnap = await getDoc(docRef);
 
@@ -55,10 +57,12 @@ export default function Flashcard() {
           return { name: collectionName, cards: flashcardsList };
         })
       );
+      setLoading(false);
       console.log(flashcardsData);
       setFlashcards(flashcardsData);
     } else {
       await setDoc(docRef, { flashcards: [] });
+      setLoading(false);
     }
   };
 
@@ -70,15 +74,51 @@ export default function Flashcard() {
     return <></>;
   }
 
-  if (flashcards.length === 0) {
+  if (loading) {
     return (
-      // <Navbar />
       <Container
-        maxWidth='100vw'
+        maxWidth='xl'
+        disableGutters
         sx={{
+          // background:
+          //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          background: 'rgb(175, 238, 238)',
+
+          minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          flex: '1',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh', // This ensures the Box takes up the full viewport height
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </Container>
+    );
+  } else if (flashcards.length === 0) {
+    return (
+      // <Navbar />
+      <Container
+        maxWidth='xl'
+        disableGutters
+        sx={{
+          // background:
+          //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
+          background: 'rgb(175, 238, 238)',
+
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          flex: '1',
         }}
       >
         <Typography variant='h4' sx={{ mt: 4 }}>
@@ -173,7 +213,7 @@ export default function Flashcard() {
               textShadow:
                 '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
               fontWeight: 'bolder',
-              textAlign: 'center'
+              textAlign: 'center',
             }}
           >
             Your Fast-Card Groups
@@ -184,7 +224,7 @@ export default function Flashcard() {
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card
                 sx={{
-                  display: {xs: 'none', md: 'flex'},
+                  display: { xs: 'none', md: 'flex' },
                 }}
               >
                 <CardActionArea>
@@ -223,7 +263,7 @@ export default function Flashcard() {
               </Card>
               <Card
                 sx={{
-                  display: {xs: 'flex', md: 'none'},
+                  display: { xs: 'flex', md: 'none' },
                 }}
               >
                 <CardActionArea>
