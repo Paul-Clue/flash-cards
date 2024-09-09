@@ -8,10 +8,15 @@ import Head from 'next/head';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
+// import BillingManagement from './components/BillingManagement';
 
 export default function Home() {
   const { user } = useUser();
   const [subscription, setSubscription] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [sessionUrl, setSessionUrl] = useState('');
+  const [sessionId, setSessionId] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout_sessions', {
@@ -31,7 +36,7 @@ export default function Home() {
   };
 
   const checkSubscription = async (email) => {
-    // const stripe = await getStripe();
+    const stripe = await getStripe();
     // console.log('stripe: ', stripe.customer);
     // try {
     //   console.log(' Checking subscription for email: ', email);
@@ -62,6 +67,7 @@ export default function Home() {
     // } catch (error) {
     //   console.error('Error checking subscription', error);
     // }
+
     try {
       const response = await fetch('/api/checkSubscription', {
         method: 'POST',
@@ -70,11 +76,11 @@ export default function Home() {
         },
         body: JSON.stringify({ email }),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to check subscription');
       }
-  
+
       const data = await response.json();
       return data.hasActiveSubscription;
     } catch (error) {
@@ -82,14 +88,28 @@ export default function Home() {
       return false;
     }
   };
-  
-  // Usage
+
   const handleSubscriptionCheck = async () => {
-    const userEmail = user.primaryEmailAddress.emailAddress; // Get this from your authentication system
-    const isSubscribed = await checkSubscription(userEmail);
-    setSubscription(isSubscribed);
-    console.log('User is subscribed:', isSubscribed);
-    // Update your UI based on the subscription status
+    // const userEmail = user.primaryEmailAddress.emailAddress;
+    // console.log('userEmail: ', userEmail);
+    // const isSubscribed = await checkSubscription(userEmail);
+    // setUsrEmail(userEmail);
+    // setSubscription(isSubscribed);
+
+    setLoading(true); // Set loading to true when starting the check
+    if (
+      user &&
+      user.primaryEmailAddress &&
+      user.primaryEmailAddress.emailAddress
+    ) {
+      const userEmail = user.primaryEmailAddress.emailAddress;
+      const isSubscribed = await checkSubscription(userEmail);
+      setSubscription(isSubscribed);
+    } else {
+      console.log('User email is not available yet');
+      setSubscription(false);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -97,8 +117,38 @@ export default function Home() {
       return;
     }
 
-    // checkSubscription(user.primaryEmailAddress.emailAddress);
     handleSubscriptionCheck();
+    const fetchSessionUrl = async (email) => {
+      if (!email) {
+        setError('Email is not available');
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await fetch(
+          `/api/get-stripe-session-id?email=${encodeURIComponent(email)}`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch session ID');
+        }
+        const data = await response.json();
+
+        setSessionId(data.sessionId);
+        return data.portalUrl;
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const getSessionUrl = async () => {
+      const url = await fetchSessionUrl(
+        user?.primaryEmailAddress?.emailAddress
+      );
+      console.log('url: ', url);
+      setSessionUrl(url);
+    };
+    getSessionUrl();
   }, [user]);
 
   return (
@@ -108,16 +158,18 @@ export default function Home() {
       sx={{
         // background:
         //   'linear-gradient(to top right, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245) )',
-        background:
-          'rgb(175, 238, 238)',
+        background: 'rgb(175, 238, 238)',
 
         height: '100%',
       }}
     >
       <Head>
         <title>Fast-Cards</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name='description' content='Create quick hits of knowledge on any topic or subject matter.' />
+        <link rel='icon' href='/favicon.ico' />
+        <meta
+          name='description'
+          content='Create quick hits of knowledge on any topic or subject matter.'
+        />
       </Head>
       <Navbar />
       <Box
@@ -173,7 +225,7 @@ export default function Home() {
             href='/sign-in'
             color='primary'
             // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-            sx={{ mt: 2,}}
+            sx={{ mt: 2 }}
           >
             Get Started
           </Button>
@@ -184,7 +236,7 @@ export default function Home() {
             href='/generate'
             color='primary'
             // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-            sx={{ mt: 2,}}
+            sx={{ mt: 2 }}
           >
             Start making cards
           </Button>
@@ -225,7 +277,7 @@ export default function Home() {
             href='/sign-in'
             color='primary'
             // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-            sx={{ mt: 2, }}
+            sx={{ mt: 2 }}
           >
             Get Started
           </Button>
@@ -236,7 +288,7 @@ export default function Home() {
             href='/generate'
             color='primary'
             // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-            sx={{ mt: 2,}}
+            sx={{ mt: 2 }}
           >
             Start making cards
           </Button>
@@ -357,15 +409,31 @@ export default function Home() {
                 Unlimited Fast-Cards and storage, with priority support.
               </Typography>
               {subscription ? (
-                <Typography variant='body1' color='green' sx={{ mt: 2, pb: 1.8}}>
-                  You are already subscribed to the Pro plan.
-                </Typography>
+                <>
+                  <Typography
+                    variant='body1'
+                    color='green'
+                    sx={{ mt: 2,}}
+                  >
+                    You are already subscribed to the Pro plan.
+                  </Typography>
+                  <Button
+                    variant='text'
+                    color='primary'
+                    sx={{ mt: 2 }}
+                    onClick={() => {
+                      window.location.href = sessionUrl;
+                    }}
+                  >
+                    Manage Subscription
+                  </Button>
+                </>
               ) : (
                 <Button
                   variant='contained'
                   color='primary'
                   // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-                  sx={{ mt: 2,}}
+                  sx={{ mt: 2 }}
                   onClick={handleSubmit}
                 >
                   {' '}
