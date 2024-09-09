@@ -8,7 +8,6 @@ import Head from 'next/head';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
-// import BillingManagement from './components/BillingManagement';
 
 export default function Home() {
   const { user } = useUser();
@@ -175,7 +174,7 @@ export default function Home() {
       <Box
         sx={{
           position: 'absolute',
-          top: '59%',
+          top: '56%',
           left: '79%',
           transform: 'translate(-50%, -50%)',
           opacity: '100%',
@@ -186,8 +185,8 @@ export default function Home() {
         <Image
           src='/flashcards3.webp'
           alt='Blank flashcards'
-          width={500}
-          height={500}
+          width={485}
+          height={485}
           sx={{
             zIndex: -1,
           }}
@@ -327,8 +326,11 @@ export default function Home() {
             <Typography>
               {' '}
               Our AI intelligently breaks down your text into concise
-              Fast-Cards, perfect for studying. Some Fast-Cards will generate
-              Wikipedia and/or YouTube links for a deeper dive into the topic.
+              Fast-Cards, perfect for studying. Prep for a conversation with
+              someone by quickly generating cards that are attuned to their
+              interests and set the foundation for a smooth, delightful
+              interaction.Some Fast-Cards will generate Wikipedia and/or YouTube
+              links for a deeper dive into the topic.
             </Typography>
           </Grid>
           <Grid item xs={12} md={4} sx={{ zIndex: 10 }}>
@@ -410,11 +412,7 @@ export default function Home() {
               </Typography>
               {subscription ? (
                 <>
-                  <Typography
-                    variant='body1'
-                    color='green'
-                    sx={{ mt: 2,}}
-                  >
+                  <Typography variant='body1' color='green' sx={{ mt: 2 }}>
                     You are already subscribed to the Pro plan.
                   </Typography>
                   <Button
@@ -432,7 +430,6 @@ export default function Home() {
                 <Button
                   variant='contained'
                   color='primary'
-                  // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
                   sx={{ mt: 2 }}
                   onClick={handleSubmit}
                 >
