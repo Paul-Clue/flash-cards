@@ -34,6 +34,7 @@ import BottomNav from '../components/BottomNav';
 import getStripe from '../../utils/getStripe';
 
 export default function Generate() {
+  const [loading, setLoading] = useState(true);
   const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -86,40 +87,43 @@ export default function Generate() {
   };
 
   const checkSubscription = async (email) => {
-    const stripe = await getStripe();
-
+    // const stripe = await getStripe();
     try {
-      console.log(' Checking subscription for email: ', email);
-      const customers = await stripe.customers.list({
-        email: email,
-        limit: 1,
+      const response = await fetch('/api/checkSubscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       });
 
-      if (customers.data.length === 0) {
-        console.log('No customer found with this email.');
-        return;
+      if (!response.ok) {
+        throw new Error('Failed to check subscription');
       }
 
-      const customerId = customers.data[0].id;
-      console.log('Customer ID: ', customerId);
-
-      const subscriptions = await stripe.subscriptions.list({
-        customer: customerId,
-        status: 'active',
-      });
-
-      if (subscriptions.data.length > 0) {
-        console.log('Subscription found: ', subscriptions.data[0]);
-        localStorage.setItem('subscription', true);
-        setSubscription(true);
-      } else {
-        console.log('No active subscription found.');
-        localStorage.removeItem('subscription');
-        setSubscription(false);
-      }
+      const data = await response.json();
+      return data.hasActiveSubscription;
     } catch (error) {
-      console.error('Error checking subscription', error);
+      console.error('Error checking subscription:', error);
+      return false;
     }
+  };
+
+  const handleSubscriptionCheck = async () => {
+    setLoading(true); 
+    if (
+      user &&
+      user.primaryEmailAddress &&
+      user.primaryEmailAddress.emailAddress
+    ) {
+      const userEmail = user.primaryEmailAddress.emailAddress;
+      const isSubscribed = await checkSubscription(userEmail);
+      setSubscription(isSubscribed);
+    } else {
+      console.log('User email is not available yet');
+      setSubscription(false);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -138,6 +142,15 @@ export default function Generate() {
     if (!name) {
       alert('Please enter a name');
       handleClose();
+      return;
+    }
+
+    const latestUser = await user.reload();
+    const userEmail = latestUser.primaryEmailAddress?.emailAddress;
+
+    if (!userEmail) {
+      console.error('User email not available');
+      alert('Unable to save flashcards. Please ensure your email is verified.');
       return;
     }
 
@@ -164,13 +177,14 @@ export default function Generate() {
           userDocRef,
           {
             flashcards: collections,
-            email: user.primaryEmailAddress.emailAddress,
+            // email: user.primaryEmailAddress.emailAddress,
+            email: userEmail,
           },
           { merge: true }
         );
       }
     } else {
-      batch.set(userDocRef, { flashcards: [{ name }], email: user.email });
+      batch.set(userDocRef, { flashcards: [{ name }], email: userEmail });
     }
     const colRef = collection(userDocRef, name);
     flashcards.forEach((flashcard) => {
@@ -178,10 +192,15 @@ export default function Generate() {
       batch.set(cardDocRef, flashcard);
     });
 
-    await batch.commit();
-    console.log('Flashcards saved ', flashcards);
-    handleClose();
-    router.push('/flashcards');
+    try {
+      await batch.commit();
+      console.log('Flashcards saved ', flashcards);
+      handleClose();
+      router.push('/flashcards');
+    } catch (error) {
+      console.error('Error saving flashcards:', error);
+      alert('Failed to save flashcards. Please try again.');
+    }
   };
 
   const convertUrlsToLinks = (text) => {

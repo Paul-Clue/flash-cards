@@ -46,7 +46,6 @@ export async function GET(req) {
     });
 
     const portalUrl = portalSession.url;
-    console.log('portalUrl: ', portalUrl);
 
     return NextResponse.json({ portalUrl });
   } catch (error) {

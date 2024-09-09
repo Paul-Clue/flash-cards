@@ -35,38 +35,7 @@ export default function Home() {
   };
 
   const checkSubscription = async (email) => {
-    const stripe = await getStripe();
-    // console.log('stripe: ', stripe.customer);
-    // try {
-    //   console.log(' Checking subscription for email: ', email);
-    //   const customers = await stripe.customers.list({
-    //     email: email,
-    //     limit: 1,
-    //   });
-
-    //   if (customers.data.length === 0) {
-    //     console.log('No customer found with this email.');
-    //     return;
-    //   }
-
-    //   const customerId = customers.data[0].id;
-    //   console.log('Customer ID: ', customerId);
-    //   const subscriptions = await stripe.subscriptions.list({
-    //     customer: customerId,
-    //     status: 'active',
-    //   });
-
-    //   if (subscriptions.data.length > 0) {
-    //     console.log('Subscription found: ', subscriptions.data[0]);
-    //     setSubscription(true);
-    //   } else {
-    //     console.log('No active subscription found.');
-    //     setSubscription(false);
-    //   }
-    // } catch (error) {
-    //   console.error('Error checking subscription', error);
-    // }
-
+    // const stripe = await getStripe();
     try {
       const response = await fetch('/api/checkSubscription', {
         method: 'POST',
@@ -89,13 +58,7 @@ export default function Home() {
   };
 
   const handleSubscriptionCheck = async () => {
-    // const userEmail = user.primaryEmailAddress.emailAddress;
-    // console.log('userEmail: ', userEmail);
-    // const isSubscribed = await checkSubscription(userEmail);
-    // setUsrEmail(userEmail);
-    // setSubscription(isSubscribed);
-
-    setLoading(true); // Set loading to true when starting the check
+    setLoading(true); 
     if (
       user &&
       user.primaryEmailAddress &&
@@ -117,6 +80,7 @@ export default function Home() {
     }
 
     handleSubscriptionCheck();
+    
     const fetchSessionUrl = async (email) => {
       if (!email) {
         setError('Email is not available');
@@ -144,7 +108,6 @@ export default function Home() {
       const url = await fetchSessionUrl(
         user?.primaryEmailAddress?.emailAddress
       );
-      console.log('url: ', url);
       setSessionUrl(url);
     };
     getSessionUrl();
