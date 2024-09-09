@@ -10,7 +10,7 @@ Your task is to generate concise and effective flashcards for studying based on 
 
 1. Create clear and concise questions for the front of the flashcards.
 2. Provide an accurate and informative answers for the back of the flashcards.
-3. Ensure that each flashcard focuses on a single concept or piece of information.
+3. Ensure that each flashcard focuses on a single concept or piece of information. Do not repeat the same concept/questions across multiple flashcards.
 4. Use simple language and ensure that the flashcards are accessible to a wide range of learners.
 5. Include a variety of questions types, such as definitions, examples, comparisons, and applications.
 6. Avoid overly complex or ambiguous phrasing in both questions and answers.
