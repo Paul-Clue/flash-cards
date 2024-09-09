@@ -171,7 +171,7 @@ export default function Home() {
         />
       </Head>
       <Navbar />
-      <Box
+      {/* <Box
         sx={{
           position: 'absolute',
           top: '56%',
@@ -191,7 +191,7 @@ export default function Home() {
             zIndex: -1,
           }}
         />
-      </Box>
+      </Box> */}
       {/* Show on small screen */}
       <Box
         sx={{
@@ -244,58 +244,88 @@ export default function Home() {
       {/* Show on medium and up screens */}
       <Box
         sx={{
-          display: { xs: 'none', md: 'block' },
+          display: { xs: 'none', md: 'flex' },
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           textAlign: 'center',
-          mb: 20,
-          mt: 10,
-          position: 'relative',
-          right: '20%',
+          // mb: 20,
+          mt: 5,
+          // right: '20%',
           zIndex: 10,
         }}
       >
-        <Typography
-          variant='h2'
-          gutterBottom
+        <Box
           sx={{
-            color: 'black',
-            fontWeight: 'bold',
-            textShadow:
-              '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
-            fontWeight: 'bolder',
+            ml: 5,
           }}
         >
-          Welcome to Fast-Cards
-        </Typography>
-        <Typography variant='h5'>
-          {' '}
-          The easiest way to make flashcards from your text
-        </Typography>
-        <SignedOut>
-          <Button
-            variant='contained'
-            href='/sign-in'
-            color='primary'
-            // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-            sx={{ mt: 2 }}
+          <Typography
+            variant='h2'
+            gutterBottom
+            sx={{
+              color: 'black',
+              fontWeight: 'bold',
+              textShadow:
+                '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
+              fontWeight: 'bolder',
+            }}
           >
-            Get Started
-          </Button>
-        </SignedOut>
-        <SignedIn>
-          <Button
-            variant='contained'
-            href='/generate'
-            color='primary'
-            // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
-            sx={{ mt: 2 }}
-          >
-            Start making cards
-          </Button>
-        </SignedIn>
+            Welcome to Fast-Cards
+          </Typography>
+          <Typography variant='h5'>
+            {' '}
+            The easiest way to make flashcards from your text
+          </Typography>
+          <SignedOut>
+            <Button
+              variant='contained'
+              href='/sign-in'
+              color='primary'
+              // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+              sx={{ mt: 2 }}
+            >
+              Get Started
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <Button
+              variant='contained'
+              href='/generate'
+              color='primary'
+              // sx={{ mt: 2, border: '1px solid', borderColor: 'grey.300' }}
+              sx={{ mt: 2 }}
+            >
+              Start making cards
+            </Button>
+          </SignedIn>
+        </Box>
+        <Box
+          sx={{
+            // position: 'absolute',
+            // top: '56%',
+            // left: '79%',
+            // transform: 'translate(-50%, -50%)',
+            mr: 10,
+            opacity: '100%',
+            zIndex: 0,
+            display: { xs: 'none', md: 'block' },
+          }}
+        >
+          <Image
+            src='/flashcards3.webp'
+            alt='Blank flashcards'
+            width={500}
+            height={500}
+            // sx={{
+            //   zIndex: -1,
+            // }}
+          />
+        </Box>
       </Box>
       <Box
         sx={{
-          my: 6,
+          // m: 6,
+          mb: 6,
           padding: 5,
           zIndex: 10,
         }}

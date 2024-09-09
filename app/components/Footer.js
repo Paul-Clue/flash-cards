@@ -35,7 +35,7 @@ export default function Footer() {
           </Typography>
         </Button>
       </Toolbar>
-      <Button href='/privacy-policy' sx={{ mr: 3 }}>
+      <Button href='/privacy-policy' sx={{ mr: 4 }}>
         <Typography
           variant='h6'
           style={{
