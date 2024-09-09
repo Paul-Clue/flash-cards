@@ -352,9 +352,12 @@ export default function Generate() {
                       }}
                     >
                       <CardActionArea
-                        disableRipple
-                        disableTouchRipple
-                        disableFocusRipple
+                        // disableRipple
+                        disableripple='true'
+                        // disableTouchRipple
+                        disabletouchripple='true'
+                        // disableFocusRipple
+                        disablefocusripple='true'
                         onClick={() => handleCardClick(index)}
                         sx={{
                           backgroundColor: 'transparent'
@@ -474,9 +477,12 @@ export default function Generate() {
                       }}
                     >
                       <CardActionArea
-                        disableRipple
-                        disableTouchRipple
-                        disableFocusRipple
+                        // disableRipple
+                        disableripple='true'
+                        // disableTouchRipple
+                        disabletouchripple='true'
+                        // disableFocusRipple
+                        disablefocusripple='true'
                         onClick={() => handleCardClick(index)}
                         sx={{
                           backgroundColor: 'transparent'
