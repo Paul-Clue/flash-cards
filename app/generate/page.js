@@ -2,6 +2,7 @@
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Container,
   Box,
@@ -110,7 +111,7 @@ export default function Generate() {
   };
 
   const handleSubscriptionCheck = async () => {
-    setLoading(true); 
+    setLoading(true);
     if (
       user &&
       user.primaryEmailAddress &&
@@ -158,6 +159,8 @@ export default function Generate() {
     const userDocRef = doc(collection(db, 'users'), user.id);
     const docSnap = await getDoc(userDocRef);
 
+    const collectionId = uuidv4();
+
     if (docSnap.exists()) {
       const collections = docSnap.data().flashcards || [];
 
@@ -172,19 +175,21 @@ export default function Generate() {
         alert('Flashcard collection with the same name already exits');
         return;
       } else {
-        collections.push({ name });
+        collections.push({ name, id: collectionId });
         batch.set(
           userDocRef,
           {
             flashcards: collections,
-            // email: user.primaryEmailAddress.emailAddress,
             email: userEmail,
           },
           { merge: true }
         );
       }
     } else {
-      batch.set(userDocRef, { flashcards: [{ name }], email: userEmail });
+      batch.set(userDocRef, {
+        flashcards: [{ name, id: collectionId }],
+        email: userEmail,
+      });
     }
     const colRef = collection(userDocRef, name);
     flashcards.forEach((flashcard) => {
@@ -206,12 +211,12 @@ export default function Generate() {
   const convertUrlsToLinks = (text) => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const parts = text.split(urlRegex);
-    
+
     return parts.map((part, index) => {
       if (urlRegex.test(part)) {
         return (
           <Box key={index} sx={{ mt: 1, mb: 1 }}>
-            <a href={part} target="_blank" rel="noopener noreferrer">
+            <a href={part} target='_blank' rel='noopener noreferrer'>
               {part}
             </a>
           </Box>
@@ -228,8 +233,6 @@ export default function Generate() {
         maxWidth='xl'
         disableGutters
         sx={{
-          // background:
-          //   'linear-gradient(to top right, rgb(130, 290, 274), rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245) )',
           background: 'rgb(175, 238, 238)',
 
           minHeight: '100vh',
@@ -260,7 +263,7 @@ export default function Generate() {
               fontWeight: 'bolder',
               mb: 5,
               textAlign: 'center',
-              display: {xs: 'flex', md: 'none'}
+              display: { xs: 'flex', md: 'none' },
             }}
           >
             Generate
@@ -277,7 +280,7 @@ export default function Generate() {
               fontWeight: 'bolder',
               mb: 5,
               textAlign: 'center',
-              display: {xs: 'none', md: 'flex'}
+              display: { xs: 'none', md: 'flex' },
             }}
           >
             Generate Fast-Cards
@@ -291,18 +294,6 @@ export default function Generate() {
                 'linear-gradient(to bottom, rgb(245, 245, 245), rgb(245, 245, 245), rgb(128, 128, 128))',
             }}
           >
-            {/* {isLoading && (
-              <CircularProgress
-                size={80}
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '40%',
-                  transform: 'translate(-50%, -50%)',
-                  zIndex: 1000,
-                }}
-              />
-            )} */}
             <TextField
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -323,7 +314,7 @@ export default function Generate() {
               sx={{ border: '1px solid', borderColor: 'grey.300' }}
               disabled={isLoading}
             >
-             {isLoading ? <CircularProgress size={20} /> : 'Submit'}
+              {isLoading ? <CircularProgress size={20} /> : 'Submit'}
             </Button>
 
             {needsMoreInfo && (
@@ -336,7 +327,11 @@ export default function Generate() {
         {flashcards.length > 0 && (
           <Box sm={{ mt: 4 }}>
             <Typography variant='h5'>Fast-Cards Preview</Typography>
-            <Grid container spacing={3} sx={{display: {xs: 'flex', md: 'none', padding: 30}}}>
+            <Grid
+              container
+              spacing={3}
+              sx={{ display: { xs: 'flex', md: 'none', padding: 30 } }}
+            >
               {flashcards.map((flashcard, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
@@ -346,21 +341,15 @@ export default function Generate() {
                         backgroundColor: 'transparent',
                         boxShadow: 'none',
                         border: 'none',
-                        // '& .MuiCardContent-root': {
-                        //   padding: 0,
-                        // },
                       }}
                     >
                       <CardActionArea
-                        // disableRipple
                         disableripple='true'
-                        // disableTouchRipple
                         disabletouchripple='true'
-                        // disableFocusRipple
                         disablefocusripple='true'
                         onClick={() => handleCardClick(index)}
                         sx={{
-                          backgroundColor: 'transparent'
+                          backgroundColor: 'transparent',
                         }}
                       >
                         <CardContent>
@@ -427,28 +416,6 @@ export default function Generate() {
                                     wordWrap: 'break-word',
                                   }}
                                 >
-                                  {/* {flashcard.back
-                                    .match(/\((https?:\/\/[^\s)]+)\)/g)
-                                    ?.map((url, index) => (
-                                      <div key={index}>
-                                        <a
-                                          href={url.slice(1, -1)}
-                                          target='_blank'
-                                          rel='noopener noreferrer'
-                                        >
-                                          {url.slice(1, -1)}
-                                        </a>
-                                        {index <
-                                          flashcard.back.match(
-                                            /\((https?:\/\/[^\s)]+)\)/g
-                                          ).length -
-                                            1 && <br />}{' '}
-                                      </div>
-                                    ))}
-                                  {flashcard.back.replace(
-                                    /\s*\(https?:\/\/[^\s)]+\)/g,
-                                    ''
-                                  )} */}
                                   {convertUrlsToLinks(flashcard.back)}
                                 </Typography>
                               </div>
@@ -461,7 +428,11 @@ export default function Generate() {
                 );
               })}
             </Grid>
-            <Grid container spacing={3} sx={{display: {xs: 'none', md: 'flex'}, padding: 5}}>
+            <Grid
+              container
+              spacing={3}
+              sx={{ display: { xs: 'none', md: 'flex' }, padding: 5 }}
+            >
               {flashcards.map((flashcard, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={index}>
@@ -471,21 +442,15 @@ export default function Generate() {
                         backgroundColor: 'transparent',
                         boxShadow: 'none',
                         border: 'none',
-                        // '& .MuiCardContent-root': {
-                        //   padding: 0,
-                        // },
                       }}
                     >
                       <CardActionArea
-                        // disableRipple
                         disableripple='true'
-                        // disableTouchRipple
                         disabletouchripple='true'
-                        // disableFocusRipple
                         disablefocusripple='true'
                         onClick={() => handleCardClick(index)}
                         sx={{
-                          backgroundColor: 'transparent'
+                          backgroundColor: 'transparent',
                         }}
                       >
                         <CardContent>
@@ -552,28 +517,6 @@ export default function Generate() {
                                     wordWrap: 'break-word',
                                   }}
                                 >
-                                  {/* {flashcard.back
-                                    .match(/\((https?:\/\/[^\s)]+)\)/g)
-                                    ?.map((url, index) => (
-                                      <div key={index}>
-                                        <a
-                                          href={url.slice(1, -1)}
-                                          target='_blank'
-                                          rel='noopener noreferrer'
-                                        >
-                                          {url.slice(1, -1)}
-                                        </a>
-                                        {index <
-                                          flashcard.back.match(
-                                            /\((https?:\/\/[^\s)]+)\)/g
-                                          ).length -
-                                            1 && <br />}{' '}
-                                      </div>
-                                    ))}
-                                  {flashcard.back.replace(
-                                    /\s*\(https?:\/\/[^\s)]+\)/g,
-                                    ''
-                                  )} */}
                                   {convertUrlsToLinks(flashcard.back)}
                                 </Typography>
                               </div>
@@ -626,10 +569,10 @@ export default function Generate() {
             <Button onClick={saveFlashcards}> Save</Button>
           </DialogActions>
         </Dialog>
-        {/* <Footer /> */}
+
         <Footer />
       </Container>
-      {/* <Footer /> */}
+
       <BottomNav />
     </>
   );

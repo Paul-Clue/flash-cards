@@ -25,6 +25,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BottomNav from '../components/BottomNav';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import ShareIcon from '@mui/icons-material/Share';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Flashcard() {
@@ -45,6 +46,7 @@ export default function Flashcard() {
       const flashcardsData = await Promise.all(
         collectionsNames.map(async (collectionData) => {
           const collectionName = collectionData.name;
+          const collectionId = collectionData.id;
           const collectionRef = collection(
             db,
             'users',
@@ -54,18 +56,22 @@ export default function Flashcard() {
           const collectionSnap = await getDocs(collectionRef);
 
           const flashcardsList = collectionSnap.docs.map((doc) => doc.data());
-          return { name: collectionName, cards: flashcardsList };
+          console.log('flashcardsList', flashcardsList);
+          return {
+            name: collectionName,
+            cards: flashcardsList,
+            id: collectionId,
+          };
         })
       );
       setLoading(false);
-      console.log(flashcardsData);
       setFlashcards(flashcardsData);
     } else {
       await setDoc(docRef, { flashcards: [] });
       setLoading(false);
     }
   };
-
+  console.log('flashcards', flashcards);
   useEffect(() => {
     getFlashcards();
   }, [user]);
@@ -80,8 +86,6 @@ export default function Flashcard() {
         maxWidth='xl'
         disableGutters
         sx={{
-          // background:
-          //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
           background: 'rgb(175, 238, 238)',
 
           minHeight: '100vh',
@@ -96,7 +100,7 @@ export default function Flashcard() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100vh', // This ensures the Box takes up the full viewport height
+            height: '100vh',
           }}
         >
           <CircularProgress />
@@ -105,13 +109,10 @@ export default function Flashcard() {
     );
   } else if (flashcards.length === 0) {
     return (
-      // <Navbar />
       <Container
         maxWidth='xl'
         disableGutters
         sx={{
-          // background:
-          //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
           background: 'rgb(175, 238, 238)',
 
           minHeight: '100vh',
@@ -185,14 +186,20 @@ export default function Flashcard() {
     );
   };
 
+  const handleShare = (collectionId) => {
+    const shareUrl = `${window.location.origin}/sharedCards/${collectionId}?userId=${user.id}`;
+    console.log('Share URL:', shareUrl);
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      alert('Share link copied to clipboard!');
+    });
+  };
+
   return (
     <>
       <Container
         maxWidth='xl'
         disableGutters
         sx={{
-          // background:
-          //   'linear-gradient(to bottom, rgb(245, 245, 245), rgb(130, 290, 274), rgb(245, 245, 245))',
           background: 'rgb(175, 238, 238)',
 
           minHeight: '100vh',
@@ -258,6 +265,16 @@ export default function Flashcard() {
                     >
                       {flashcard.name}
                     </Typography>
+                    <ShareIcon
+                      onClick={() => handleShare(flashcard.id)}
+                      sx={{
+                        color: 'green',
+                        position: 'relative',
+                        left: 5,
+                        top: -40,
+                        zIndex: 10,
+                      }}
+                    />
                   </CardContent>
                 </CardActionArea>
               </Card>
@@ -297,6 +314,16 @@ export default function Flashcard() {
                     >
                       {flashcard.name}
                     </Typography>
+                    <ShareIcon
+                      onClick={() => handleShare(flashcard.id)}
+                      sx={{
+                        color: 'blue',
+                        position: 'relative',
+                        left: 255,
+                        top: -8,
+                        zIndex: 10,
+                      }}
+                    />
                   </CardContent>
                 </CardActionArea>
               </Card>
