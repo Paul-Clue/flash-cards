@@ -1,9 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useUser } from '@clerk/nextjs';
 import { useParams, useSearchParams } from 'next/navigation';
 import { db } from '../../../firebase';
 import { useRouter } from 'next/navigation';
-import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  writeBatch,
+} from 'firebase/firestore';
 import {
   CircularProgress,
   Box,
@@ -12,10 +21,18 @@ import {
   CardContent,
   CardActionArea,
   Container,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField,
+  DialogTitle,
 } from '@mui/material';
 import Footer from '../../components/Footer';
 
 export default function SharedFlashcards() {
+  const { isLoading, isSignedIn, user } = useUser();
   const params = useParams();
   const id = params.id;
   const searchParams = useSearchParams();
@@ -25,6 +42,8 @@ export default function SharedFlashcards() {
   const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [collectionName, setCollectionName] = useState('');
+  const [name, setName] = useState('');
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchFlashcards = async () => {
@@ -71,6 +90,12 @@ export default function SharedFlashcards() {
   };
 
   useEffect(() => {
+    if (sentCard && sentCard.name) {
+      setName(sentCard.name);
+    }
+  }, [sentCard]);
+
+  useEffect(() => {
     fetchFlashcards();
   }, [userId, id]);
 
@@ -82,6 +107,79 @@ export default function SharedFlashcards() {
         JSON.stringify(cards)
       )}`
     );
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const saveFlashcards = async () => {
+    if (!isSignedIn || !user) {
+      alert('You must be signed in to save flashcards');
+      return;
+    }
+    if (!name.trim()) {
+      alert('Please enter a name for the collection');
+      return;
+    }
+  
+    try {
+      const batch = writeBatch(db);
+      const userDocRef = doc(collection(db, 'users'), user.id);
+      const docSnap = await getDoc(userDocRef);
+  
+      const collectionId = uuidv4();
+  
+      if (docSnap.exists()) {
+        const collections = docSnap.data().flashcards || [];
+  
+        if (collections.length >= 5 && !subscription) {
+          alert('You already have 5 collections. Upgrade to Pro Plan to save more');
+          return;
+        }
+  
+        if (collections.find(f => f.name === name)) {
+          alert('Flashcard collection with the same name already exists');
+          return;
+        }
+  
+        collections.push({ name, id: collectionId });
+        batch.set(userDocRef, { flashcards: collections }, { merge: true });
+      } else {
+        batch.set(userDocRef, {
+          flashcards: [{ name, id: collectionId }]
+        });
+      }
+  
+      const colRef = collection(userDocRef, name);
+      
+      if (sentCard && sentCard.cards) {
+        sentCard.cards.forEach((card, index) => {
+          const cardDocRef = doc(colRef);
+          const cardData = {
+            ...card,
+            id: card.id || `card_${index + 1}`, // Ensure each card has an id
+          };
+          batch.set(cardDocRef, cardData);
+        });
+      } else {
+        console.error('sentCard or sentCard.cards is undefined');
+        alert('Error: No cards to save');
+        return;
+      }
+  
+      await batch.commit();
+      console.log('Flashcards saved successfully');
+      handleClose();
+      // Optionally, redirect or update UI
+    } catch (error) {
+      console.error('Error saving flashcards:', error);
+      alert('Failed to save flashcards. Please try again.');
+    }
   };
 
   if (loading) {
@@ -124,15 +222,16 @@ export default function SharedFlashcards() {
     >
       <Box
         sx={{
-          width: '350px',
+          width: '100%',
+          height: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignContent: 'center',
+          alignItems: 'center',
           flex: '1',
         }}
       >
-        <Box marginTop={-20} marginBottom={10}>
+        <Box marginTop={-15} marginBottom={10}>
           <Typography
             variant='h2'
             gutterBottom
@@ -148,21 +247,74 @@ export default function SharedFlashcards() {
             Sent To You
           </Typography>
         </Box>
-        <Card sx={{ width: '100%', height: '80px', display: 'flex' }}>
-          <CardActionArea>
-            <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Typography
-                variant='h6'
-                onClick={() => {
-                  handleCardClick(sentCard.name, sentCard.cards);
-                }}
-              >
-                {sentCard.name}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        <Box>
+          <Card sx={{ width: '350px', height: '80px', display: 'flex' }}>
+            <CardActionArea>
+              <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Typography
+                  variant='h6'
+                  onClick={() => {
+                    handleCardClick(sentCard.name, sentCard.cards);
+                  }}
+                >
+                  {sentCard.name}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Box>
       </Box>
+      <Box
+        sx={{
+          mt: 2,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Button
+          variant='contained'
+          color='secondary'
+          onClick={handleOpen}
+          sx={{ mb: 2 }}
+        >
+          Save
+        </Button>
+      </Box>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Save Flashcards</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please enter a name for your flashcards collection
+          </DialogContentText>
+          {/* <TextField
+            autoFocus
+            defaultValue={sentCard.name}
+            margin='dense'
+            label='Collection Name'
+            type='text'
+            fullWidth
+            value={sentCard.name}
+            onChange={(e) => setName(e.target.value)}
+            variant='outlined'
+          /> */}
+          <Typography
+            variant='h6'
+            sx={{ fontWeight: 'bold', textAlign: 'center' }}
+          >
+            {sentCard.name}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}> Cancel</Button>
+          <Button
+            onClick={() => {
+              saveFlashcards();
+            }}
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Footer />
     </Container>
   );
