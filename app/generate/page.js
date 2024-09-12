@@ -24,6 +24,7 @@ import {
 import CircularProgress from '@mui/material/CircularProgress';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { db } from '../../firebase';
 import {
   doc,
@@ -49,9 +50,8 @@ export default function Generate() {
   const [needsMoreInfo, setNeedsMoreInfo] = useState(false);
   const router = useRouter();
   const [subscription, setSubscription] = useState(false);
-  // const [flashcards, setFlashcards] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
-  // const [editingStates, setEditingStates] = useState({});
+  const [editingStates, setEditingStates] = useState({});
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -93,20 +93,6 @@ export default function Generate() {
     setOpen(false);
   };
 
-  // const handleEdit = (index) => {
-  //   setEditingStates((prev) => ({ ...prev, [index]: true }));
-  // };
-
-  // const handleSave = (index) => {
-  //   setEditingStates((prev) => ({ ...prev, [index]: false }));
-  // };
-
-  // const handleChange = (index, field, value) => {
-  //   const updatedFlashcards = [...flashcards];
-  //   updatedFlashcards[index] = { ...updatedFlashcards[index], [field]: value };
-  //   setFlashcards(updatedFlashcards);
-  // };
-
   const handleEdit = (index) => {
     setEditingIndex(index);
   };
@@ -119,6 +105,16 @@ export default function Generate() {
     const updatedFlashcards = [...flashcards];
     updatedFlashcards[index] = { ...updatedFlashcards[index], [field]: value };
     setFlashcards(updatedFlashcards);
+  };
+
+  const handleDelete = (index) => {
+    const updatedFlashcards = flashcards.filter((_, i) => i !== index);
+    setFlashcards(updatedFlashcards);
+    setEditingStates((prev) => {
+      const newState = { ...prev };
+      delete newState[index];
+      return newState;
+    });
   };
 
   const checkSubscription = async (email) => {
@@ -166,7 +162,7 @@ export default function Generate() {
       return;
     }
 
-    checkSubscription(user.primaryEmailAddress.emailAddress);
+    setSubscription(checkSubscription(user.primaryEmailAddress.emailAddress));
   }, [user]);
 
   const saveFlashcards = async () => {
@@ -197,7 +193,7 @@ export default function Generate() {
 
     if (docSnap.exists()) {
       const collections = docSnap.data().flashcards || [];
-
+      console.log('subscription', subscription);
       if (collections.length >= 5 && !subscription) {
         alert(
           'You already have 5 collections. Upgrade to Pro Plan to save more'
@@ -360,152 +356,12 @@ export default function Generate() {
         </Box>
         {/* Small Screen */}
         {flashcards.length > 0 && (
-          <Box sm={{ mt: 4 }}>
+          <Box sx={{ mt: 4, width: '100%' }}>
             <Typography variant='h5'>Fast-Cards Preview</Typography>
             <Grid
               container
               spacing={3}
               sx={{ display: { xs: 'flex', md: 'none', padding: 30 } }}
-            >
-              {flashcards.map((flashcard, index) => {
-                return (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Card
-                      elevation={0}
-                      sx={{
-                        backgroundColor: 'transparent',
-                        boxShadow: 'none',
-                        border: 'none',
-                      }}
-                    >
-                      <CardActionArea
-                        disableripple='true'
-                        disabletouchripple='true'
-                        disablefocusripple='true'
-                        onClick={() => handleCardClick(index)}
-                        sx={{
-                          backgroundColor: 'transparent',
-                        }}
-                      >
-                        <CardContent>
-                        {editingIndex === index ? (
-                            <>
-                              <TextField
-                                fullWidth
-                                label='Front'
-                                value={flashcard.front}
-                                onChange={(e) =>
-                                  handleChange(index, 'front', e.target.value)
-                                }
-                                margin='normal'
-                              />
-                              <TextField
-                                fullWidth
-                                label='Back'
-                                value={flashcard.back}
-                                onChange={(e) =>
-                                  handleChange(index, 'back', e.target.value)
-                                }
-                                margin='normal'
-                                multiline
-                                rows={3}
-                              />
-                              <IconButton onClick={() => handleSave(index)}>
-                                <SaveIcon />
-                              </IconButton>
-                            </>
-                          ) : (
-                          <Box
-                            sx={{
-                              perspective: '1000px',
-                              '& > div': {
-                                transition: 'transform 0.6s',
-                                transformStyle: 'preserve-3d',
-                                position: 'relative',
-                                width: '100%',
-                                height: '350px',
-                                transform: flipped[index]
-                                  ? 'rotateY(180deg)'
-                                  : 'rotateY(0deg)',
-                              },
-                              '& > div > div': {
-                                position: 'absolute',
-                                width: '100%',
-                                height: '100%',
-                                backfaceVisibility: 'hidden',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                padding: 2,
-                                boxSizing: 'border-box',
-                              },
-
-                              '& > div > div:nth-of-type(2)': {
-                                transform: 'rotateY(180deg)',
-                              },
-                              overflowY: 'auto',
-                            }}
-                          >
-                            <div style={{ background: 'whitesmoke' }}>
-                              <div className={{ backgroundColor: 'red' }}>
-                                <Typography
-                                  variant='h5'
-                                  component='div'
-                                  sx={{
-                                    fontWeight: 'bold',
-                                    textAlign: 'center',
-                                    fontSize: '.8rem',
-                                    fontWeight: 'bold',
-                                    overflow: 'auto',
-                                    whiteSpace: 'break-spaces',
-                                    wordWrap: 'break-word',
-                                  }}
-                                >
-                                  {flashcard.front}
-                                </Typography>
-                                <IconButton
-                                    onClick={() => handleEdit(index)}
-                                    sx={{
-                                      position: 'absolute',
-                                      top: 0,
-                                      right: 0,
-                                    }}
-                                  >
-                                    <EditIcon />
-                                  </IconButton>
-                              </div>
-                              <div>
-                                <Typography
-                                  variant='h5'
-                                  component='div'
-                                  sx={{
-                                    fontWeight: 'bold',
-                                    textAlign: 'center',
-                                    fontSize: '.8rem',
-                                    fontWeight: 'bold',
-                                    overflow: 'auto',
-                                    whiteSpace: 'break-spaces',
-                                    wordWrap: 'break-word',
-                                  }}
-                                >
-                                  {convertUrlsToLinks(flashcard.back)}
-                                </Typography>
-                              </div>
-                              </div>
-                            </Box>
-                          )}
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-            {/* Large Screen */}
-            <Grid
-              container
-              spacing={3}
-              sx={{ display: { xs: 'none', md: 'flex' }, padding: 5 }}
             >
               {flashcards.map((flashcard, index) => {
                 return (
@@ -588,6 +444,22 @@ export default function Generate() {
                             >
                               <div style={{ background: 'whitesmoke' }}>
                                 <div className={{ backgroundColor: 'red' }}>
+                                  <IconButton
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDelete(index);
+                                    }}
+                                    color='error'
+                                    sx={{
+                                      // ml: 1,
+                                      position: 'absolute',
+                                      top: 2,
+                                      right: 300,
+                                      // zIndex: 1000,
+                                    }}
+                                  >
+                                    <DeleteIcon />
+                                  </IconButton>
                                   <Typography
                                     variant='h5'
                                     component='div'
@@ -609,6 +481,166 @@ export default function Generate() {
                                       position: 'absolute',
                                       top: 0,
                                       right: 0,
+                                    }}
+                                  >
+                                    <EditIcon />
+                                  </IconButton>
+                                </div>
+                                <div>
+                                  <Typography
+                                    variant='h5'
+                                    component='div'
+                                    sx={{
+                                      fontWeight: 'bold',
+                                      textAlign: 'center',
+                                      fontSize: '.8rem',
+                                      fontWeight: 'bold',
+                                      overflow: 'auto',
+                                      whiteSpace: 'break-spaces',
+                                      wordWrap: 'break-word',
+                                    }}
+                                  >
+                                    {convertUrlsToLinks(flashcard.back)}
+                                  </Typography>
+                                </div>
+                              </div>
+                            </Box>
+                          )}
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            {/* Large Screen */}
+            <Grid
+              container
+              spacing={3}
+              sx={{ display: { xs: 'none', md: 'flex' }, padding: 5 }}
+            >
+              {flashcards.map((flashcard, index) => {
+                return (
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Card
+                      elevation={0}
+                      sx={{
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none',
+                        border: 'none',
+                      }}
+                    >
+                      <CardActionArea
+                        disableripple='true'
+                        disabletouchripple='true'
+                        disablefocusripple='true'
+                        onClick={() => handleCardClick(index)}
+                        sx={{
+                          backgroundColor: 'transparent',
+                        }}
+                      >
+                        <CardContent>
+                          {editingIndex === index ? (
+                            <>
+                              <TextField
+                                fullWidth
+                                label='Front'
+                                value={flashcard.front}
+                                onChange={(e) =>
+                                  handleChange(index, 'front', e.target.value)
+                                }
+                                margin='normal'
+                              />
+                              <TextField
+                                fullWidth
+                                label='Back'
+                                value={flashcard.back}
+                                onChange={(e) =>
+                                  handleChange(index, 'back', e.target.value)
+                                }
+                                margin='normal'
+                                multiline
+                                rows={3}
+                              />
+                              <IconButton onClick={() => handleSave(index)}>
+                                <SaveIcon />
+                              </IconButton>
+                            </>
+                          ) : (
+                            <Box
+                              sx={{
+                                perspective: '1000px',
+                                '& > div': {
+                                  transition: 'transform 0.6s',
+                                  transformStyle: 'preserve-3d',
+                                  position: 'relative',
+                                  width: '100%',
+                                  height: '350px',
+                                  // height: '100%',
+                                  // overflow: 'auto',
+                                  transform: flipped[index]
+                                    ? 'rotateY(180deg)'
+                                    : 'rotateY(0deg)',
+                                },
+                                '& > div > div': {
+                                  position: 'absolute',
+                                  width: '100%',
+                                  height: '100%',
+                                  backfaceVisibility: 'hidden',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  padding: 2,
+                                  boxSizing: 'border-box',
+                                },
+
+                                '& > div > div:nth-of-type(2)': {
+                                  transform: 'rotateY(180deg)',
+                                },
+                                overflowY: 'auto',
+                              }}
+                            >
+                              <div style={{ background: 'whitesmoke' }}>
+                                <div className={{ backgroundColor: 'red' }}>
+                                  <IconButton
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDelete(index);
+                                    }}
+                                    color='error'
+                                    sx={{
+                                      // ml: 1,
+                                      position: 'absolute',
+                                      top: 0,
+                                      right: 315,
+                                    }}
+                                  >
+                                    <DeleteIcon />
+                                  </IconButton>
+                                  <Typography
+                                    variant='h5'
+                                    component='div'
+                                    sx={{
+                                      fontWeight: 'bold',
+                                      textAlign: 'center',
+                                      fontSize: '.8rem',
+                                      fontWeight: 'bold',
+                                      overflow: 'auto',
+                                      whiteSpace: 'break-spaces',
+                                      wordWrap: 'break-word',
+                                    }}
+                                  >
+                                    {flashcard.front}
+                                  </Typography>
+                                  <IconButton
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleEdit(index);
+                                    }}
+                                    sx={{
+                                      position: 'absolute',
+                                      top: 0,
+                                      right: 20,
                                     }}
                                   >
                                     <EditIcon />
