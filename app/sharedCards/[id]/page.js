@@ -256,6 +256,11 @@ export default function SharedFlashcards() {
                   onClick={() => {
                     handleCardClick(sentCard.name, sentCard.cards);
                   }}
+                  sx={{
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    fontSize: '1.2rem',
+                  }}
                 >
                   {sentCard.name}
                 </Typography>

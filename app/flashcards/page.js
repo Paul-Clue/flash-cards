@@ -260,7 +260,7 @@ export default function Flashcard() {
                         textAlign: 'center',
                         display: 'flex',
                         justifyContent: 'center',
-                        mt: -3,
+                        // mt: -1,
                       }}
                     >
                       {flashcard.name}
@@ -271,7 +271,7 @@ export default function Flashcard() {
                         color: 'green',
                         position: 'relative',
                         left: 5,
-                        top: -40,
+                        top: -65,
                         zIndex: 10,
                       }}
                     />
@@ -309,7 +309,7 @@ export default function Flashcard() {
                         textAlign: 'center',
                         display: 'flex',
                         justifyContent: 'center',
-                        mt: -3,
+                        mt: -1,
                       }}
                     >
                       {flashcard.name}
