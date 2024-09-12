@@ -51,7 +51,7 @@ export default function FlashcardPage() {
             }}
           >
             <Typography
-              variant='h2'
+              variant='h4'
               gutterBottom
               sx={{
                 color: 'black',

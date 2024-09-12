@@ -212,11 +212,10 @@ export default function Flashcard() {
         <Navbar />
         <Box marginTop={5}>
           <Typography
-            variant='h2'
+            variant='h4'
             gutterBottom
             sx={{
               color: 'black',
-              fontWeight: 'bold',
               textShadow:
                 '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
               fontWeight: 'bolder',

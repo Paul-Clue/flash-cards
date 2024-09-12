@@ -287,7 +287,6 @@ export default function Generate() {
             variant='h4'
             sx={{
               color: 'black',
-              fontWeight: 'bold',
               textShadow:
                 '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
               fontWeight: 'bolder',
@@ -304,7 +303,6 @@ export default function Generate() {
             variant='h4'
             sx={{
               color: 'black',
-              fontWeight: 'bold',
               textShadow:
                 '1px 1px 0px whitesmoke, -1px -1px 2px turquoise, 1px -1px 1px whitesmoke, -1px 1px 0px whitesmoke',
               fontWeight: 'bolder',
