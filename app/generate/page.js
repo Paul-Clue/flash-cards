@@ -440,8 +440,15 @@ export default function Generate() {
                                   },
                                 }}
                               />
-                              <IconButton onClick={() => handleSave(index)}>
-                                <SaveIcon />
+                              <IconButton onClick={() => handleSave(index)}
+                                sx={{
+                                  color: 'black',
+                                  '&:hover': {
+                                    color: 'green',
+                                  },
+                                }}
+                                >
+                                <SaveIcon/>
                               </IconButton>
                             </>
                           ) : (
@@ -632,7 +639,14 @@ export default function Generate() {
                                   },
                                 }}
                               />
-                              <IconButton onClick={() => handleSave(index)}>
+                              <IconButton onClick={() => handleSave(index)}
+                                sx={{
+                                  color: 'black',
+                                  '&:hover': {
+                                    color: 'green',
+                                  },
+                                }}
+                                >
                                 <SaveIcon />
                               </IconButton>
                             </>
