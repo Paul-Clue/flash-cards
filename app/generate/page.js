@@ -386,16 +386,34 @@ export default function Generate() {
                             <>
                               <TextField
                                 fullWidth
-                                label='Front'
+                                label='FRONT'
                                 value={flashcard.front}
                                 onChange={(e) =>
                                   handleChange(index, 'front', e.target.value)
                                 }
                                 margin='normal'
+                                sx={{
+                                  backgroundColor: 'white',
+                                  '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                      borderColor: 'rgba(0, 0, 0, 0.23)',
+                                    },
+                                    '&:hover fieldset': {
+                                      borderColor: 'primary.main',
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                      color: 'primary.main',
+                                      fontWeight: 'bolder',
+                                    },
+                                    '& .MuiInputLabel-root.Mui-focused': {
+                                      color: 'darkblue',
+                                    },
+                                  },
+                                }}
                               />
                               <TextField
                                 fullWidth
-                                label='Back'
+                                label='BACK'
                                 value={flashcard.back}
                                 onChange={(e) =>
                                   handleChange(index, 'back', e.target.value)
@@ -403,6 +421,24 @@ export default function Generate() {
                                 margin='normal'
                                 multiline
                                 rows={3}
+                                sx={{
+                                  backgroundColor: 'white',
+                                  '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                      borderColor: 'rgba(0, 0, 0, 0.23)',
+                                    },
+                                    '&:hover fieldset': {
+                                      borderColor: 'primary.main',
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                      color: 'primary.main',
+                                      fontWeight: 'bolder',
+                                    },
+                                    '& .MuiInputLabel-root.Mui-focused': {
+                                      color: 'darkblue',
+                                    },
+                                  },
+                                }}
                               />
                               <IconButton onClick={() => handleSave(index)}>
                                 <SaveIcon />
@@ -542,16 +578,34 @@ export default function Generate() {
                             <>
                               <TextField
                                 fullWidth
-                                label='Front'
+                                label='FRONT'
                                 value={flashcard.front}
                                 onChange={(e) =>
                                   handleChange(index, 'front', e.target.value)
                                 }
                                 margin='normal'
+                                sx={{
+                                  backgroundColor: 'white',
+                                  '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                      borderColor: 'rgba(0, 0, 0, 0.23)',
+                                    },
+                                    '&:hover fieldset': {
+                                      borderColor: 'primary.main',
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                      color: 'primary.main',
+                                      fontWeight: 'bolder',
+                                    },
+                                    '& .MuiInputLabel-root.Mui-focused': {
+                                      color: 'darkblue',
+                                    },
+                                  },
+                                }}
                               />
                               <TextField
                                 fullWidth
-                                label='Back'
+                                label='BACK'
                                 value={flashcard.back}
                                 onChange={(e) =>
                                   handleChange(index, 'back', e.target.value)
@@ -559,6 +613,24 @@ export default function Generate() {
                                 margin='normal'
                                 multiline
                                 rows={3}
+                                sx={{
+                                  backgroundColor: 'white',
+                                  '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                      borderColor: 'rgba(0, 0, 0, 0.23)',
+                                    },
+                                    '&:hover fieldset': {
+                                      borderColor: 'primary.main',
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                      color: 'primary.main',
+                                      fontWeight: 'bolder',
+                                    },
+                                    '& .MuiInputLabel-root.Mui-focused': {
+                                      color: 'darkblue',
+                                    },
+                                  },
+                                }}
                               />
                               <IconButton onClick={() => handleSave(index)}>
                                 <SaveIcon />
