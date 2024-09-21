@@ -37,7 +37,7 @@ export default function SignInPage() {
         mt: 5
        }}
       >
-        <Typography variant='h4'>Sign In</Typography>
+        <Typography variant='h4' sx={{mb: 3}}>Sign In</Typography>
         <SignIn />
       </Box>
     </Container>

@@ -35,7 +35,7 @@ export default function SignUpPage() {
         justifyContent='center'
         sx={{ mt: 5, mb: 5 }}
       >
-        <Typography variant='h4'>Sign Up</Typography>
+        <Typography variant='h4' sx={{mb: 3}}>Sign Up</Typography>
         <SignUp />
       </Box>
     </Container>
