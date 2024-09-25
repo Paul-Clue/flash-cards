@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             content='Create quick hits of knowledge on any topic or subject matter.'
           />
         </Head>
-        {/* <Script id='google-tag-manager' strategy='afterInteractive'>
+        <Script id='google-tag-manager' strategy='afterInteractive'>
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -31,8 +31,8 @@ export default function RootLayout({ children }) {
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-MQ4WG4TP');
           `}
-        </Script> */}
-        <Script id='google-tag-manager' strategy='afterInteractive'>
+        </Script>
+        {/* <Script id='google-tag-manager' strategy='afterInteractive'>
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
             'https://stape.fstcards.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-MQ4WG4TP');
           `}
-        </Script>
+        </Script> */}
         <body className={inter.className}>
           <Script id='google-tag-manager-noscript' strategy='afterInteractive'>
             {`
