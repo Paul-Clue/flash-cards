@@ -275,7 +275,7 @@ export default function Home() {
           }}
         >
           <Image
-            src='/flashcards3.webp'
+            src='/new-cards.png'
             alt='Blank flashcards'
             width={500}
             height={500}
