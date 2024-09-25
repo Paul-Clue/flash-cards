@@ -440,15 +440,16 @@ export default function Generate() {
                                   },
                                 }}
                               />
-                              <IconButton onClick={() => handleSave(index)}
+                              <IconButton
+                                onClick={() => handleSave(index)}
                                 sx={{
                                   color: 'black',
                                   '&:hover': {
                                     color: 'green',
                                   },
                                 }}
-                                >
-                                <SaveIcon/>
+                              >
+                                <SaveIcon />
                               </IconButton>
                             </>
                           ) : (
@@ -485,47 +486,57 @@ export default function Generate() {
                             >
                               <div style={{ background: 'whitesmoke' }}>
                                 <div className={{ backgroundColor: 'red' }}>
-                                  <IconButton
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleDelete(index);
-                                    }}
-                                    color='error'
+                                  <Box
                                     sx={{
-                                      // ml: 1,
-                                      position: 'absolute',
-                                      top: 2,
-                                      right: 300,
-                                      // zIndex: 1000,
+                                      // position: 'relative',
+                                      // width: '100%',
+                                      // height: '100%',
+                                      // display: 'flex',
+                                      // flexDirection: 'column',
                                     }}
                                   >
-                                    <DeleteIcon />
-                                  </IconButton>
-                                  <Typography
-                                    variant='h5'
-                                    component='div'
-                                    sx={{
-                                      fontWeight: 'bold',
-                                      textAlign: 'center',
-                                      fontSize: '.8rem',
-                                      fontWeight: 'bold',
-                                      overflow: 'auto',
-                                      whiteSpace: 'break-spaces',
-                                      wordWrap: 'break-word',
-                                    }}
-                                  >
-                                    {flashcard.front}
-                                  </Typography>
-                                  <IconButton
-                                    onClick={() => handleEdit(index)}
-                                    sx={{
-                                      position: 'absolute',
-                                      top: 0,
-                                      right: 0,
-                                    }}
-                                  >
-                                    <EditIcon />
-                                  </IconButton>
+                                    <IconButton
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDelete(index);
+                                      }}
+                                      color='error'
+                                      sx={{
+                                        // ml: 1,
+                                        position: 'absolute',
+                                        top: 0,
+                                        right: 70,
+                                        // zIndex: 1000,
+                                      }}
+                                    >
+                                      <DeleteIcon />
+                                    </IconButton>
+                                    <Typography
+                                      variant='h5'
+                                      component='div'
+                                      sx={{
+                                        fontWeight: 'bold',
+                                        textAlign: 'center',
+                                        fontSize: '.8rem',
+                                        fontWeight: 'bold',
+                                        overflow: 'auto',
+                                        whiteSpace: 'break-spaces',
+                                        wordWrap: 'break-word',
+                                      }}
+                                    >
+                                      {flashcard.front}
+                                    </Typography>
+                                    <IconButton
+                                      onClick={() => handleEdit(index)}
+                                      sx={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        right: 0,
+                                      }}
+                                    >
+                                      <EditIcon />
+                                    </IconButton>
+                                  </Box>
                                 </div>
                                 <div>
                                   <Typography
@@ -639,14 +650,15 @@ export default function Generate() {
                                   },
                                 }}
                               />
-                              <IconButton onClick={() => handleSave(index)}
+                              <IconButton
+                                onClick={() => handleSave(index)}
                                 sx={{
                                   color: 'black',
                                   '&:hover': {
                                     color: 'green',
                                   },
                                 }}
-                                >
+                              >
                                 <SaveIcon />
                               </IconButton>
                             </>
