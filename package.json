@@ -17,6 +17,8 @@
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@stripe/stripe-js": "^4.2.0",
+    "axios": "^1.7.7",
+    "facebook-nodejs-business-sdk": "^20.0.3",
     "firebase": "^10.12.5",
     "next": "^14.2.6",
     "openai": "^4.55.5",

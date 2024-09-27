@@ -4,8 +4,7 @@ import getStripe from '../utils/getStripe';
 import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import { Typography, Container, Grid, Button, Box } from '@mui/material';
-// import Head from 'next/head';
-// import Script from 'next/script';
+import { sendFacebookEvent } from '../utils/facebookEvents';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
@@ -17,8 +16,28 @@ export default function Home() {
   const [sessionUrl, setSessionUrl] = useState('');
   const [sessionId, setSessionId] = useState(null);
   const [error, setError] = useState(null);
+  const windowLocation = window.location.href;
+
+  user?.primaryEmailAddress?.emailAddress &&
+    sendFacebookEvent(
+      'ViewContent',
+      windowLocation,
+      {
+        email: user?.primaryEmailAddress?.emailAddress,
+      },
+      {
+      }
+    );
 
   const handleSubmit = async () => {
+    sendFacebookEvent(
+      'InitiateCheckout',
+      windowLocation,
+      {
+        email: user?.primaryEmailAddress?.emailAddress,
+      },
+      {}
+    );
     const checkoutSession = await fetch('/api/checkout_sessions', {
       method: 'POST',
       headers: { origin: 'https://fstcards.com' },

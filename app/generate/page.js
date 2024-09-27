@@ -3,6 +3,7 @@ import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { sendFacebookEvent } from '../../utils/facebookEvents';
 import {
   Container,
   Box,
@@ -52,6 +53,18 @@ export default function Generate() {
   const [subscription, setSubscription] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingStates, setEditingStates] = useState({});
+  const windowLocation = window.location.href;
+
+  user?.primaryEmailAddress?.emailAddress &&
+    sendFacebookEvent(
+      'ViewContent',
+      windowLocation,
+      {
+        email: user?.primaryEmailAddress?.emailAddress,
+      },
+      {
+      }
+    );
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -487,13 +500,15 @@ export default function Generate() {
                               <div style={{ background: 'whitesmoke' }}>
                                 <div className={{ backgroundColor: 'red' }}>
                                   <Box
-                                    sx={{
-                                      // position: 'relative',
-                                      // width: '100%',
-                                      // height: '100%',
-                                      // display: 'flex',
-                                      // flexDirection: 'column',
-                                    }}
+                                    sx={
+                                      {
+                                        // position: 'relative',
+                                        // width: '100%',
+                                        // height: '100%',
+                                        // display: 'flex',
+                                        // flexDirection: 'column',
+                                      }
+                                    }
                                   >
                                     <IconButton
                                       onClick={(e) => {
