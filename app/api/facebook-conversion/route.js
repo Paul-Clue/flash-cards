@@ -37,7 +37,7 @@ export async function POST(request) {
 
   const payload = {
     data: [eventData],
-    test_event_code: 'TEST97372',
+    // test_event_code: 'TEST97372',
   };
 
   try {
