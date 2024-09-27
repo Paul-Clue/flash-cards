@@ -15,6 +15,9 @@ export async function POST(request) {
 
   const { eventName, eventSourceUrl, userData, customData } = await request.json();
 
+  // const eventId = crypto.randomBytes(16).toString('hex');
+  const eventId = crypto.randomUUID();
+
   console.log('Received event data:', { eventName, eventSourceUrl, userData, customData });
 
   console.log('client_user_agent:', request.headers.get('user-agent'));
@@ -22,6 +25,7 @@ export async function POST(request) {
   const eventData = {
     event_name: eventName,
     event_time: Math.floor(Date.now() / 1000),
+    event_id: eventId,
     event_source_url: eventSourceUrl,
     action_source: 'website',
     user_data: {
@@ -33,7 +37,7 @@ export async function POST(request) {
 
   const payload = {
     data: [eventData],
-    test_event_code: 'TEST8839',
+    test_event_code: 'TEST97372',
   };
 
   try {
